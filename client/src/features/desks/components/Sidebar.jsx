@@ -3,6 +3,12 @@ import reactLogo from "@/assets/react.svg";
 import { useDesks } from "@/shared/providers/DesksProvider";
 import Desk from "@/assets/desk.svg?react";
 
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+
 export default function Sidebar() {
   const { desks } = useDesks();
 
@@ -17,10 +23,28 @@ export default function Sidebar() {
           <img src={reactLogo} alt="" className="w-6 h-6" />
           <li className="font-semibold">Boards</li>
         </NavLink>
-        <NavLink className="flex items-center gap-4 w-full">
-          <img src={reactLogo} alt="" className="w-6 h-6" />
-          <li className="font-semibold">Boards</li>
-        </NavLink>
+
+        <Collapsible>
+          <CollapsibleTrigger>
+            <div className="flex items-center gap-4 w-full">
+              <img src={reactLogo} alt="" className="w-6 h-6" />
+              <li className="font-semibold">Settings</li>
+            </div>
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="p-4">
+            <ul className="flex flex-col gap-4">
+              <NavLink className="flex items-center gap-4 w-full">
+                <img src={reactLogo} alt="" className="w-6 h-6" />
+                <li className="font-semibold">Customize Board</li>
+              </NavLink>
+              <NavLink className="flex items-center gap-4 w-full">
+                <img src={reactLogo} alt="" className="w-6 h-6" />
+                <li className="font-semibold">Profile</li>
+              </NavLink>
+            </ul>
+          </CollapsibleContent>
+        </Collapsible>
       </div>
 
       <hr
@@ -36,7 +60,7 @@ export default function Sidebar() {
               <li className="flex items-center gap-4">
                 <div
                   id="desk-icon"
-                  className="bg-green-400 rounded-md p-1 flex items-center justify-center"
+                  className="bg-primary rounded-md p-1 flex items-center justify-center"
                 >
                   <Desk />
                 </div>
