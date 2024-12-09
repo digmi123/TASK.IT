@@ -8,15 +8,6 @@ export function useBoards(deskId) {
   const { userData } = useUser();
 
   const addBoard = (boardName) => {
-    //Optimistic update
-    // const newBoard = {
-    //   id: Math.random(),
-    //   name: boardName,
-    //   owner_id: userData.id,
-    // };
-
-    // setBoards((prev) => [...prev, newBoard]);
-
     addNewBoard(deskId, boardName).then((res) => {
       setBoards((prev) => [...prev, res.data]);
     });
