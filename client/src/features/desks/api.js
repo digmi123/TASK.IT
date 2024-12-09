@@ -5,7 +5,10 @@ export const getDesks = async () => {
   return desks.data;
 };
 
-export const addNewDesk = async (deskName) => {
-  const newDesk = await axios.post("/api/desks/add-desk", { name: deskName });
+export const addNewDesk = async ({ deskName, template }) => {
+  const newDesk = await axios.post("/api/desks/add-desk", {
+    name: deskName,
+    template,
+  });
   return newDesk.data;
 };

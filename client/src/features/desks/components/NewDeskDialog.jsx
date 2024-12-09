@@ -20,7 +20,8 @@ function NewDeskDialog() {
   const handleNewDesk = (e) => {
     e.preventDefault();
     const deskName = e.target.desk_name.value;
-    addDesk(deskName);
+    const template = e.target.template.value;
+    addDesk({ deskName, template });
     setOpen(false);
   };
 
@@ -43,23 +44,23 @@ function NewDeskDialog() {
           />
         </DialogHeader>
 
-        <div id="templates-section" className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold">Choose your Template</h2>
-          <div id="templates-wrapper" className="flex items-center gap-4">
-            <TemplateCard />
-            <TemplateCard />
-            <TemplateCard />
-          </div>
-        </div>
-
-        <hr
-          id="divider"
-          className="w-full h-[1px] bg-slate-300 rounded-md my-4 border-0"
-        />
-
         <form className="flex flex-col gap-4" onSubmit={handleNewDesk}>
           <h2 className="text-2xl font-semibold">Enter Desk Name</h2>
           <Input type="text" placeholder="Desk Name" name="desk_name" />
+
+          <div id="templates-section" className="flex flex-col gap-4">
+            <h2 className="text-2xl font-semibold">Choose your Template</h2>
+            <div id="templates-wrapper" className="flex items-center gap-4">
+              <TemplateCard templateName="Product" />
+              <TemplateCard templateName="Testing" />
+              <TemplateCard templateName="None" />
+            </div>
+          </div>
+
+          <hr
+            id="divider"
+            className="w-full h-[1px] bg-slate-300 rounded-md my-4 border-0"
+          />
 
           <div id="new-members-section" className="flex flex-col gap-4">
             <div id="new-members-header" className="flex items-center gap-4">

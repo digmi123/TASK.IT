@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-
 const db = require("../db");
+const { templateBoards } = require("../api/consts");
 
 router.get("/", async (req, res) => {
   const loggedUser = req.user;
@@ -14,13 +14,32 @@ router.get("/", async (req, res) => {
 
 router.post("/add-desk", async (req, res) => {
   const loggedUser = req.user;
-  const { name } = req.body;
+  const { name, template } = req.body;
+  // Need to get the template and decide what boards to add by template pick.
 
   const newDesk = await db.Desk.create({
     name,
     status: "public",
     owner_id: loggedUser.id,
   });
+
+  if (template === "None") res.status(200).json(newDesk);
+  const chosenTemplate = templateBoards[template];
+
+  //Create the Board.
+  for (const board of chosenTemplate.boards) {
+    const newBoard = await db.Board.create({
+      name: board.name,
+      owner_id: loggedUser.id,
+      parent_desk: newDesk.id,
+    });
+    for (const column of board.columns) {
+      await db.Column.create({
+        name: column.name,
+        board_id: newBoard.id,
+      });
+    }
+  }
   res.status(200).json(newDesk);
 });
 
