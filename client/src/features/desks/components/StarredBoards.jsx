@@ -1,10 +1,10 @@
-import starIcon from "@/assets/star.svg";
+import StarIcon from "@/assets/star.svg?react";
 
 export default function StarredBoards() {
   return (
     <div>
       <div className="flex items-center gap-4">
-        <img src={starIcon} alt="board" className="w-6 h-6" />
+        <StarIcon />
         <h2 className="text-2xl font-semibold">Starred Boards</h2>
       </div>
 
