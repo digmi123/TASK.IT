@@ -1,5 +1,1 @@
-export const deskSectionActions = [
-  { name: "Members" },
-  { name: "Boards" },
-  { name: "Settings" },
-];
+export const deskSectionActions = [{ name: "Boards" }, { name: "Settings" }];
