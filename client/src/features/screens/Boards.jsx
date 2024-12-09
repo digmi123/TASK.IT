@@ -9,8 +9,6 @@ import { Button } from "@/components/ui/button";
 export default function Boards() {
   const { deskId } = useParams();
 
-  console.log("im here");
-
   // Get user boards by hook/api call.
   const { boards, loading, addBoard } = useBoards(deskId);
 
