@@ -21,3 +21,14 @@ export const handleRegister = ({ email, password }) => {
       console.log(error);
     });
 };
+
+export const handleLogout = (successCallback) => {
+  axios
+    .post("/api/auth/logout")
+    .then(() => {
+      if (successCallback) successCallback();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

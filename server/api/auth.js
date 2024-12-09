@@ -32,4 +32,9 @@ router.post("/register", async (req, res) => {
   res.status(200).json(user);
 });
 
+router.post("/logout", (req, res) => {
+  res.clearCookie("auth-token");
+  res.status(200).json({ message: "Logout successful" });
+});
+
 module.exports = router;
