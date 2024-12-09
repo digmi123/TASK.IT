@@ -6,6 +6,7 @@ import NewBoardDialog from "@/features/board/components/NewBoardDialog";
 import { useBoards } from "@/features/board/hooks/useBoards";
 import { deskSectionActions } from "../consts";
 import Desk from "@/assets/desk.svg?react";
+import { Fragment } from "react";
 
 export default function DeskSection({ desk }) {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ export default function DeskSection({ desk }) {
     <div id="desk-section" className="flex flex-col gap-4">
       <div id="upper" className="flex">
         <div id="desk-name" className="flex-1 flex items-center gap-4">
-          <div id="desk-icon" className="bg-green-400 p-1 rounded-md">
+          <div id="desk-icon" className="bg-primary p-1 rounded-md">
             <Desk />
           </div>
           <Link to={`/${desk.id}`}>
@@ -27,10 +28,17 @@ export default function DeskSection({ desk }) {
 
         <div id="desk-actions" className="flex items-center gap-4">
           {deskSectionActions.map((action) => (
-            <Button key={action.name}>
-              <TemplateIcon />
-              {action.name}
-            </Button>
+            <Fragment key={`${desk.name}-${action.name}`}>
+              <Button onClick={() => navigate(`/${desk.id}/members/workspace`)}>
+                <TemplateIcon />
+                Members
+              </Button>
+
+              <Button key={action.name}>
+                <TemplateIcon />
+                {action.name}
+              </Button>
+            </Fragment>
           ))}
         </div>
       </div>
@@ -52,14 +60,9 @@ export default function DeskSection({ desk }) {
         <NewBoardDialog addBoard={addBoard}>
           <Button
             id="new-board"
-            className="flex flex-col gap-3 items-center w-56 h-24 bg-slate-600 rounded-md p-0 justify-start"
+            className="flex gap-3 items-center w-56 h-24 bg-slate-600 rounded-md p-0 justify-center"
           >
-            <div id="inner-card" className="py-2 px-4 w-full">
-              <h2 className="text-xl font-semibold text-white">
-                ADD NEW BOARD
-              </h2>
-            </div>
-            <Add />
+            <Add style={{ width: "4rem", height: "4rem" }} />
           </Button>
         </NewBoardDialog>
       </div>
