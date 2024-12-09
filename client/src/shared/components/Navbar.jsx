@@ -10,11 +10,16 @@ import {
 
 import arrow from "@/assets/down-arrow.svg";
 import logo from "@/assets/logo.svg";
-import circle_user from "@/assets/user.svg";
+import Avatar from "@/assets/user.svg?react";
+import Logout from "@/assets/logout.svg?react";
+
 import NewDeskDialog from "@/features/desks/components/NewDeskDialog";
 import { Link } from "react-router-dom";
+import { useUser } from "../providers/UserProvider";
 
 function Navbar() {
+  const { logout } = useUser();
+
   return (
     <ul>
       <Menubar>
@@ -80,17 +85,17 @@ function Navbar() {
 
         <MenubarMenu>
           <MenubarTrigger>
-            <img src={circle_user} alt="user" className="w-6 h-6" />
+            <Avatar />
           </MenubarTrigger>
           <MenubarContent>
-            <MenubarItem>
-              New Tab <MenubarShortcut>⌘T</MenubarShortcut>
+            <MenubarItem className="gap-2" onClick={() => logout()}>
+              <Logout />
+              Log Out
             </MenubarItem>
-            <MenubarItem>New Window</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem>Share</MenubarItem>
             <MenubarSeparator />
             <MenubarItem>Print</MenubarItem>
+            <MenubarSeparator />
+            <MenubarItem>Profile</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
