@@ -10,11 +10,11 @@ export default function CollabMain() {
     <div className="flex flex-col gap-4">
       <div id="first-content">
         <h2 className="font-semibold text-xl">
-          Workspace Members <span>3</span>
+          Desk Members <span>{members.length}</span>
         </h2>
         <p>
-          Workspace members can view and join all Workspace visible boards and
-          create new boards in the Workspace.
+          Desk members can view and join all Desk visible boards and create new
+          boards in the Desk.
         </p>
       </div>
 
@@ -27,9 +27,9 @@ export default function CollabMain() {
         <h2 className="font-semibold text-xl">Invite members to join you</h2>
         <div className="flex items-start gap-4">
           <p>
-            Anyone with an invite link can join this free Workspace. You can
-            also disable and create a new invite link for this Workspace at any
-            time. Pending invitations count toward the 10 collaborator limit.
+            Anyone with an invite link can join this free Desk. You can also
+            disable and create a new invite link for this Desk at any time.
+            Pending invitations count toward the 10 collaborator limit.
           </p>
           <Button>
             <AddIcon />
