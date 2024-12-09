@@ -5,7 +5,7 @@ export function useGetDesks() {
   const [loading, setLoading] = useState(true);
   const [desks, setDesks] = useState([]);
 
-  const addDesk = (deskName) => {
+  const addDesk = ({ deskName, template }) => {
     //Optimistic update
     const newDesk = {
       id: Math.random(),
@@ -18,8 +18,7 @@ export function useGetDesks() {
     console.log("here on addDesk");
 
     //Api call
-    addNewDesk(deskName).then((res) => {
-      console.log("here on api call");
+    addNewDesk({ deskName, template }).then((res) => {
       console.log({ res });
 
       setDesks((prev) =>
