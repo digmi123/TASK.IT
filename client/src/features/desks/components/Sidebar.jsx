@@ -2,6 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import reactLogo from "@/assets/react.svg";
 import { useDesks } from "@/shared/providers/DesksProvider";
 import Desk from "@/assets/desk.svg?react";
+import Settings from "@/assets/settings.svg?react";
 
 import {
   Collapsible,
@@ -16,18 +17,19 @@ export default function Sidebar() {
     <ul className="w-[256px]">
       <div id="upper-links" className="flex flex-col gap-4">
         <NavLink className="flex items-center gap-4 w-full">
-          <img src={reactLogo} alt="" className="w-6 h-6" />
+          <Settings />
           <li className="font-semibold">Boards</li>
         </NavLink>
+
         <NavLink className="flex items-center gap-4 w-full">
-          <img src={reactLogo} alt="" className="w-6 h-6" />
+          <Settings />
           <li className="font-semibold">Boards</li>
         </NavLink>
 
         <Collapsible>
           <CollapsibleTrigger>
             <div className="flex items-center gap-4 w-full">
-              <img src={reactLogo} alt="" className="w-6 h-6" />
+              <Settings />
               <li className="font-semibold">Settings</li>
             </div>
           </CollapsibleTrigger>
@@ -62,7 +64,7 @@ export default function Sidebar() {
                   id="desk-icon"
                   className="bg-primary rounded-md p-1 flex items-center justify-center"
                 >
-                  <Desk />
+                  <Desk style={{ color: "white" }} />
                 </div>
                 {desk.name}
               </li>
