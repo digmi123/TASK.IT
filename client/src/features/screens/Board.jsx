@@ -1,4 +1,4 @@
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import Columns from "../columns/components/Columns";
 import BoardBar from "../board/BoardBar";
 import { updateTaskParent } from "../tasks/api";
@@ -6,6 +6,13 @@ import { useBoard } from "@/shared/providers/BoardProvider";
 
 function Board() {
   const { boardData, setBoardData, loading, handleAddColumn } = useBoard();
+
+  // Add custom sensor to prevent dragging swallows the click event on task.
+  const sensors = useSensors(
+    useSensor(MouseSensor, {
+      activationConstraint: { distance: 10 },
+    })
+  );
 
   if (loading) return <h1>Loading...</h1>;
 
@@ -60,7 +67,7 @@ function Board() {
     <div className="flex flex-col overflow-hidden">
       <BoardBar boardName={boardData.name} />
 
-      <DndContext onDragEnd={handleDragEnd}>
+      <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
         <Columns columns={boardData.columns} addColumn={handleAddColumn} />
       </DndContext>
     </div>
