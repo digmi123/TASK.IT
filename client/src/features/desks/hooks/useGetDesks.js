@@ -15,12 +15,8 @@ export function useGetDesks() {
     };
     setDesks((prev) => [...prev, newDesk]);
 
-    console.log("here on addDesk");
-
     //Api call
     addNewDesk({ deskName, template }).then((res) => {
-      console.log({ res });
-
       setDesks((prev) =>
         prev.map((desk) =>
           desk.id === newDesk.id ? { ...desk, ...res, pending: false } : desk
