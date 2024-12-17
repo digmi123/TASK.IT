@@ -19,7 +19,7 @@ export default function DeskSection({ desk }) {
       <div id="upper" className="flex">
         <div id="desk-name" className="flex-1 flex items-center gap-4">
           <div id="desk-icon" className="bg-primary p-1 rounded-md">
-            <Desk />
+            <Desk style={{ color: "white" }} />
           </div>
           <Link to={`/${desk.id}`}>
             <h2 className="text-xl">{desk.name}</h2>
@@ -33,6 +33,11 @@ export default function DeskSection({ desk }) {
                 <TemplateIcon />
                 Members
               </Button>
+
+              {/* <Button onClick={() => navigate(`/${desk.id}/members/workspace`)}>
+                <TemplateIcon />
+                Boards
+              </Button> */}
 
               <Button key={action.name}>
                 <TemplateIcon />
@@ -49,7 +54,7 @@ export default function DeskSection({ desk }) {
             to={`${desk.id}/${board.id}`}
             key={board.id}
             id="template"
-            className="w-56 h-24 bg-slate-600 rounded-md"
+            className="w-56 h-24 bg-card rounded-md"
           >
             <div id="inner-template-card" className="py-2 px-4">
               <h2 className="text-white">{board.name}</h2>
@@ -60,7 +65,7 @@ export default function DeskSection({ desk }) {
         <NewBoardDialog addBoard={addBoard}>
           <Button
             id="new-board"
-            className="flex gap-3 items-center w-56 h-24 bg-slate-600 rounded-md p-0 justify-center"
+            className="flex gap-3 items-center w-56 h-24 bg-card rounded-md p-0 justify-center"
           >
             <Add style={{ width: "4rem", height: "4rem" }} />
           </Button>
