@@ -2,9 +2,12 @@ import { Button } from "@/components/ui/button";
 import AddIcon from "@/assets/add.svg?react";
 import { useDeskMembers } from "../hooks/useDeskMembers";
 import Member from "./Member";
+import ZeroDeskMembers from "./ZeroDeskMembers";
 
 export default function CollabMain() {
   const { members } = useDeskMembers();
+
+  if (members.length === 0) return <ZeroDeskMembers />;
 
   return (
     <div className="flex flex-col gap-4">
