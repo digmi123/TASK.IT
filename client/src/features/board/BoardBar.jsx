@@ -1,9 +1,4 @@
-import { Button } from "@/components/ui/button";
 import reactLogo from "../../assets/react.svg";
-import Task from "../tasks/components/Task";
-import TaskDialog from "../tasks/components/TaskDialog";
-import { useState } from "react";
-
 export default function BoardBar({ boardName }) {
   return (
     <div
