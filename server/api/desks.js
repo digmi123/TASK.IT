@@ -69,7 +69,6 @@ router.get("/:deskId/members", async (req, res) => {
 router.post("/add-board", async (req, res) => {
   const loggedUser = req.user;
   const { deskId, name } = req.body;
-  console.log({ deskId, name });
 
   const newBoard = await db.Board.create({
     name,

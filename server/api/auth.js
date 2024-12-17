@@ -24,9 +24,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/register", async (req, res) => {
   const { email, password } = req.body;
-  console.log({ password });
   const newPass = bcrypt.hashSync(password, 10);
-  console.log({ newPass });
 
   const user = await db.User.create({ email, password: newPass });
   res.status(200).json(user);
