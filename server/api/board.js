@@ -7,7 +7,10 @@ router.get("/:boardId", async (req, res) => {
   // Future Adir: get user id
   const board = await db.Board.findOne({
     where: { id: boardId },
-    include: { model: db.Column, include: { model: db.Task } },
+    include: {
+      model: db.Column,
+      include: { model: db.Task, include: { model: db.Comment } },
+    },
   });
   res.status(200).json(board);
 });
