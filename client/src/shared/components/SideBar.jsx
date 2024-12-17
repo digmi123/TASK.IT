@@ -4,7 +4,7 @@ function SideBar() {
   const { id: boardId } = useParams();
 
   return (
-    <nav className="h-screen bg-card text-card-foreground border shadow rounded-md">
+    <nav className="h-screen text-card-foreground border shadow rounded-md">
       <ul className="flex flex-col gap-4 p-4">
         <li>
           <a href="/" className="flex items-center gap-4">
