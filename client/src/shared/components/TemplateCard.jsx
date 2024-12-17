@@ -1,6 +1,4 @@
 export default function TemplateCard({ templateName }) {
-  console.log({ templateName });
-
   return (
     <div id="template" className="w-56 h-24 bg-slate-600 rounded-md relative">
       <label className="absolute top-2 right-2">
