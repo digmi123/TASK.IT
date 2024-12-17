@@ -9,7 +9,7 @@ export default function StarredBoards() {
       </div>
 
       <div id="boards-wrapper" className="flex gap-4 py-4">
-        <div id="template" className="w-56 h-24 bg-slate-600 rounded-md">
+        <div id="template" className="w-56 h-24 bg-slate-500 rounded-md">
           <div id="inner-board-card" className="py-2 px-4">
             <h2 className="text-white">Board Name</h2>
           </div>
