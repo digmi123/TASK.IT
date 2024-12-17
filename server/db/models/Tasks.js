@@ -18,6 +18,11 @@ const Tasks = sequelize.define("tasks", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  priority: {
+    type: DataTypes.ENUM("Low", "Medium", "High"),
+    allowNull: false,
+    defaultValue: "Low",
+  },
 });
 
 // Column Task associations.
