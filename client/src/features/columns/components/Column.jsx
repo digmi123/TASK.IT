@@ -2,7 +2,7 @@ import { useDroppable } from "@dnd-kit/core";
 import Task from "../../tasks/components/Task";
 import Add from "@/assets/add.svg?react";
 import { Button } from "@/components/ui/button";
-import NewTaskDialog from "@/features/tasks/components/NewTaskDialog";
+import NewTaskDialog from "@/features/task/components/NewTaskDialog";
 
 function Column({ column }) {
   const { isOver, setNodeRef } = useDroppable({
