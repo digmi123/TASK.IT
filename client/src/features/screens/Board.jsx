@@ -1,11 +1,22 @@
 import { DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
 import Columns from "../columns/components/Columns";
 import BoardBar from "../board/BoardBar";
-import { updateTaskParent } from "../tasks/api";
-import { useBoard } from "@/shared/providers/BoardProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import {
+  fetchBoardThunk,
+  updateTaskColumn as updateTaskColumnRedux,
+} from "@/redux/slices/boardSlice";
+import { useParams } from "react-router-dom";
 
 function Board() {
-  const { boardData, setBoardData, loading, handleAddColumn } = useBoard();
+  const { boardId } = useParams();
+  const dispatch = useDispatch();
+  const { boardData, loading } = useSelector((state) => state.board);
+
+  useEffect(() => {
+    dispatch(fetchBoardThunk(boardId));
+  }, [boardId, dispatch]);
 
   // Add custom sensor to prevent dragging swallows the click event on task.
   const sensors = useSensors(
@@ -16,46 +27,16 @@ function Board() {
 
   if (loading) return <h1>Loading...</h1>;
 
-  const removeTask = (task) => {
-    const { parent_column, id } = task.data.current;
-
-    setBoardData((board) => {
-      const column = board.columns.find(
-        (column) => column.id === parent_column
-      );
-
-      const taskIndex = column.tasks.findIndex((task) => task.id === id);
-      column.tasks.splice(taskIndex, 1);
-      return board;
-    });
-  };
-
-  const addTask = (columnId, task) => {
-    const { id, title, description, createdTime } = task.data.current;
-    const addedTask = {
-      id,
-      parent_column: columnId,
-      title,
-      description,
-      createdTime,
-    };
-
-    setBoardData((board) => {
-      board?.columns
-        .filter((column) => column.id === columnId)[0]
-        .tasks.push(addedTask);
-
-      return board;
-    });
-  };
-
   const updateTaskColumn = async (newColumnId, task) => {
-    const { id } = task.data.current;
-    // Optimistic update to task parent.
-    addTask(newColumnId, task);
-    removeTask(task);
-
-    await updateTaskParent({ id, new_parent: newColumnId });
+    const { parent_column } = task.data.current;
+    //State update.
+    dispatch(
+      updateTaskColumnRedux({
+        parentColumn: parent_column,
+        targetColumn: newColumnId,
+        task,
+      })
+    );
   };
 
   const handleDragEnd = (event) => {
@@ -68,7 +49,7 @@ function Board() {
       <BoardBar boardName={boardData.name} />
 
       <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
-        <Columns columns={boardData.columns} addColumn={handleAddColumn} />
+        <Columns columns={boardData.columns} />
       </DndContext>
     </div>
   );

@@ -1,13 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { useBoard } from "@/shared/providers/BoardProvider";
+import { addColumnThunk } from "@/redux/slices/boardSlice";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 function NewColumnForm({ setOpen }) {
   const [columnName, setColumnName] = useState("");
-  const { handleAddColumn } = useBoard();
+  const { boardData } = useSelector((state) => state.board);
+  const dispatch = useDispatch();
 
   const saveNewColumn = () => {
-    handleAddColumn(columnName);
+    dispatch(addColumnThunk({ boardId: boardData.id, columnName }));
 
     //Reset
     setOpen(false);
