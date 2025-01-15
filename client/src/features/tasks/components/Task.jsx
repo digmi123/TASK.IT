@@ -4,7 +4,7 @@ import CheckMark from "@/assets/checkmark.svg?react";
 import CommentsIcon from "@/assets/comments.svg?react";
 import taskBg from "@/assets/task-bg.jpg";
 import Tag from "./Tag";
-import TaskDialog from "./TaskDialog";
+import TaskDialog from "@/features/task/components/TaskDialog";
 
 function Task({ task }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
