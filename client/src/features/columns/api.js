@@ -5,5 +5,6 @@ export const addColumn = async ({ boardId, columnName }) => {
     boardId,
     name: columnName,
   });
-  return newColumn;
+  newColumn.data.tasks = [];
+  return newColumn.data;
 };
