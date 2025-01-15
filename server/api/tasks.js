@@ -3,6 +3,12 @@ const router = express.Router();
 
 const db = require("../db");
 
+router.get("/:taskId", async (req, res) => {
+  const { taskId } = req.params;
+  const task = await db.Task.findAll({ where: { id: taskId } });
+  res.status(200).json(task);
+});
+
 router.put("/:taskId", async (req, res) => {
   const { taskId } = req.params;
   const { new_parent } = req.body;
