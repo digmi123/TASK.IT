@@ -1,9 +1,19 @@
 import TemplateIcon from "@/assets/template.svg?react";
 import DeskSection from "../desks/components/DeskSection";
-import { useDesks } from "@/shared/providers/DesksProvider";
+// import { useDesks } from "@/shared/providers/DesksProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchDesksThunk } from "@/redux/slices/desksSlice";
+import { useEffect } from "react";
 
 export default function Desks() {
-  const { desks } = useDesks();
+  const dispatch = useDispatch();
+  const { desks, loading } = useSelector((state) => state.desks);
+  // Fetch desks on mount
+  useEffect(() => {
+    dispatch(fetchDesksThunk());
+  }, [dispatch]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div id="section-wrapper" className="flex flex-col gap-2">
