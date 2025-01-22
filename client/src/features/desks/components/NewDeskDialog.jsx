@@ -13,15 +13,17 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import TemplateCard from "@/shared/components/TemplateCard";
 import NewMemberAvatar from "@/features/members/components/NewMemberAvatar";
-import { useDesks } from "@/shared/providers/DesksProvider";
+import { addNewDeskThunk } from "@/redux/slices/desksSlice";
+import { useDispatch } from "react-redux";
 
 function NewDeskDialog() {
-  const { addDesk } = useDesks();
-  const handleNewDesk = (e) => {
+  const dispatch = useDispatch();
+
+  const handleNewDesk = async (e) => {
     e.preventDefault();
     const deskName = e.target.desk_name.value;
     const template = e.target.template.value;
-    addDesk({ deskName, template });
+    dispatch(addNewDeskThunk({ deskName, template }));
     setOpen(false);
   };
 

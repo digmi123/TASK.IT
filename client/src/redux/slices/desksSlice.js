@@ -1,12 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getDesks } from "@/features/desks/api"; // Replace with your API calls
+import { getDesks, addNewDesk as addNewDeskApi } from "@/features/desks/api"; // Replace with your API calls
 
 // Async thunk for fetching desks
 export const fetchDesksThunk = createAsyncThunk(
   "desks/fetchDesks",
   async () => {
     const desks = await getDesks();
-    return desks; // Adjust based on your API
+    return desks;
+  }
+);
+
+export const addNewDeskThunk = createAsyncThunk(
+  "desks/addNewDesk",
+  async ({ deskName, template }, { dispatch }) => {
+    console.log({ deskName, template });
+
+    const newDesk = await addNewDeskApi({ deskName, template });
+    dispatch(addDesk(newDesk));
+    addNewDeskApi({ deskName, template }).catch((error) => {
+      // Handle error: Rollback the optimistic update
+      console.error("Failed to update the backend:", error);
+      // Rollback state to maintain consistency
+      // dispatch(removeTask({ parentColumn: targetColumn, id: task.id }));
+    });
   }
 );
 
@@ -19,7 +35,7 @@ const desksSlice = createSlice({
   },
   reducers: {
     addDesk: (state, action) => {
-      state.desks.push(action.payload);
+      state.desks = [...state.desks, action.payload];
     },
   },
 
@@ -33,6 +49,17 @@ const desksSlice = createSlice({
         state.loading = false;
       })
       .addCase(fetchDesksThunk.rejected, (state) => {
+        state.loading = false;
+      });
+
+    builder
+      .addCase(addNewDeskThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addNewDeskThunk.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(addNewDeskThunk.rejected, (state) => {
         state.loading = false;
       });
   },
