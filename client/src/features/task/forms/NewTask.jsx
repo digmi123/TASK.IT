@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { addTask } from "../../tasks/api";
-import { useBoard } from "@/shared/providers/BoardProvider";
 import PrioritySection from "../../tasks/components/PrioritySection";
+import { useDispatch } from "react-redux";
+import { addNewTaskThunk } from "@/redux/slices/boardSlice";
 
 function NewTask({ columnId, setOpen }) {
-  const { setBoardData } = useBoard();
+  const dispatch = useDispatch();
 
   const handleNewTask = (e) => {
     e.preventDefault();
@@ -19,34 +19,7 @@ function NewTask({ columnId, setOpen }) {
       description: task_description.value,
       priority: priority.value,
     };
-
-    setBoardData((board) => {
-      const updatedBoard = {
-        ...board,
-        columns: board.columns.map((column) => {
-          if (column.id === columnId) {
-            return {
-              ...column,
-              tasks: [...column.tasks, newTask],
-            };
-          }
-          return column;
-        }),
-      };
-
-      return updatedBoard;
-    });
-
-    //Api call
-    addTask({
-      columnId,
-      task: {
-        title: task_name.value,
-        description: task_description.value,
-        priority: priority.value,
-      },
-    });
-
+    dispatch(addNewTaskThunk({ task: newTask, columnId }));
     setOpen(false);
   };
 
