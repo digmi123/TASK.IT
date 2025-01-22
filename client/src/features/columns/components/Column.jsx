@@ -31,8 +31,8 @@ function Column({ column }) {
         </div>
 
         <div id="tasks-wrapper" className="flex flex-col gap-4">
-          {column.tasks.map((task) => {
-            return <Task key={task.id} task={task} />;
+          {column.tasks.map((task, index) => {
+            return <Task key={`${task.name}-${index}`} task={task} />;
           })}
         </div>
 
