@@ -1,6 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
 import reactLogo from "@/assets/react.svg";
-import { useDesks } from "@/shared/providers/DesksProvider";
 import Desk from "@/assets/desk.svg?react";
 import Settings from "@/assets/settings.svg?react";
 
@@ -9,9 +8,10 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { useSelector } from "react-redux";
 
 export default function Sidebar() {
-  const { desks } = useDesks();
+  const { desks } = useSelector((state) => state.desks);
 
   return (
     <ul className="w-[256px]">
