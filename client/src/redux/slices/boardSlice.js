@@ -2,13 +2,14 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getBoard } from "@/features/board/api";
 import { addColumn as addColumnApi } from "@/features/columns/api";
 import { updateTaskParent } from "@/features/tasks/api";
+import { addTask as addNewTaskApi } from "@/features/tasks/api";
 
 // Async thunk for fetching desks
 export const fetchBoardThunk = createAsyncThunk(
   "desks/fetchBoard",
   async (boardId) => {
     const boardData = await getBoard(boardId);
-    return boardData.data; // Adjust based on your API
+    return boardData.data;
   }
 );
 
@@ -20,11 +21,25 @@ export const addColumnThunk = createAsyncThunk(
   }
 );
 
+export const addNewTaskThunk = createAsyncThunk(
+  "tasks/addTask",
+  async ({ task, columnId }, { dispatch }) => {
+    console.log({ task, columnId });
+
+    dispatch(addNewTask({ columnId, task }));
+    addNewTaskApi({ columnId, task }).catch((error) => {
+      // Handle error: Rollback the optimistic update
+      console.error("Failed to update the backend:", error);
+      // Rollback state to maintain consistency
+      // dispatch(removeTask({ parentColumn: targetColumn, id: task.id }));
+    });
+  }
+);
+
 export const updateTaskColumn = createAsyncThunk(
   "board/updateTaskColumn",
   async ({ parentColumn, targetColumn, task }, { dispatch }) => {
     // Optimistically update state
-    console.log("on updateTaskColumn slice");
     dispatch(removeTask({ parentColumn, id: task.id }));
     dispatch(addTask({ columnId: targetColumn, task }));
 
@@ -50,12 +65,29 @@ const boardSlice = createSlice({
     columnLoading: false,
   },
   reducers: {
+    addNewTask: (state, action) => {
+      const { columnId, task } = action.payload;
+      console.log({ columnId, task });
+
+      const column = state.boardData.columns.find(
+        (column) => column.id === columnId
+      );
+      task.Comments = [];
+      console.log({ addedTask: task });
+
+      column.tasks.push(task);
+    },
+
     addTask: (state, action) => {
       const { columnId, task } = action.payload;
       const column = state.boardData.columns.find(
         (column) => column.id === columnId
       );
-      if (column) column.tasks.push(task.data.current);
+      const updatedTask = {
+        ...task.data.current,
+        parent_column: columnId,
+      };
+      column.tasks.push(updatedTask);
     },
     removeTask: (state, action) => {
       const { parentColumn, id } = action.payload;
@@ -83,6 +115,7 @@ const boardSlice = createSlice({
       .addCase(addColumnThunk.pending, (state) => {
         state.columnLoading = true;
       })
+
       .addCase(addColumnThunk.fulfilled, (state, action) => {
         // Add the new column to the columns array immutably
         state.boardData = {
@@ -97,5 +130,6 @@ const boardSlice = createSlice({
   },
 });
 
-export const { addColumn, removeTask, addTask } = boardSlice.actions;
+export const { addColumn, removeTask, addTask, addNewTask } =
+  boardSlice.actions;
 export default boardSlice.reducer;
