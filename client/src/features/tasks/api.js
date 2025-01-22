@@ -9,10 +9,7 @@ export const updateTaskParent = async (task) => {
   return updatedTask;
 };
 
-export const addTask = async ({ columnId, task }) => {
-  const { data: addedTask } = await axios.post("/api/tasks", {
-    task,
-    columnId,
-  });
+export const addTask = async ({ task }) => {
+  const { data: addedTask } = await axios.post("/api/tasks", { task });
   return addedTask;
 };
