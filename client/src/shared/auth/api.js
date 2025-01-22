@@ -22,13 +22,13 @@ export const handleRegister = ({ email, password }) => {
     });
 };
 
-export const handleLogout = (successCallback) => {
+export const handleLogout = () => {
   axios
     .post("/api/auth/logout")
-    .then(() => {
-      if (successCallback) successCallback();
-    })
     .catch((error) => {
       console.log(error);
+    })
+    .then(() => {
+      window.location.href = "/login";
     });
 };
