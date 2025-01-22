@@ -5,8 +5,9 @@ import Member from "./Member";
 import ZeroDeskMembers from "./ZeroDeskMembers";
 
 export default function CollabMain() {
-  const { members } = useDeskMembers();
+  const { members, loading } = useDeskMembers();
 
+  if (loading) return <div>Loading...</div>;
   if (members.length === 0) return <ZeroDeskMembers />;
 
   return (
