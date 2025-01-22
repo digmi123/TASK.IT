@@ -12,10 +12,38 @@ const Users = sequelize.define("users", {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
+    validate: {
+      isEmail: true,
+    },
   },
-  password: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  picture: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  },
+
+  // Fields for credential-based login
+  password: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+
+  // Fields for Google OAuth users
+  googleId: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    unique: true,
+  },
+  isGoogleUser: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
 });
 
