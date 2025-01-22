@@ -22,20 +22,10 @@ import { addComment, getTask } from "@/features/task/api";
 export default function TaskDialog({ task, children }) {
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState("");
-  // const [taskData, setTaskData] = useState();
-  // fetch task by taskId
+
   const handleComment = () => {
     addComment({ comment, taskId: task.id });
   };
-
-  // const hadleOpenTask = () => {
-  //   // fetch task
-  //   setOpen((prev) => !prev);
-  //   if (open) return;
-  //   getTask(task.id).then((res) => setTaskData(res));
-
-  //   console.log({ taskData });
-  // };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
