@@ -21,13 +21,12 @@ router.put("/:taskId", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { columnId } = req.body;
-  const { title, description, priority } = req.body.task;
+  const { title, description, priority, parent_column } = req.body.task;
 
   const newTask = {
     title,
     description,
-    parent_column: columnId,
+    parent_column,
     priority,
   };
 
