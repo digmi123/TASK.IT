@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import Card from "./components/Card";
 import { Link } from "react-router-dom";
-import { useUser } from "@/shared/providers/UserProvider";
+import { useSelector } from "react-redux";
 export default function BoardCard({ boardInfo, id }) {
-  const { userData } = useUser();
+  const { user } = useSelector((state) => state.user);
 
   return (
     <Card>
@@ -17,7 +17,7 @@ export default function BoardCard({ boardInfo, id }) {
             className="flex items-center gap-4 justify-between"
           >
             <Button variant="secondary">Edit Board</Button>
-            {userData.id === boardInfo.owner_id && <Button>Delete</Button>}
+            {user.id === boardInfo.owner_id && <Button>Delete</Button>}
           </div>
         </div>
       </Link>

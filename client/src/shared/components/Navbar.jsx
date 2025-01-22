@@ -15,10 +15,21 @@ import Logout from "@/assets/logout.svg?react";
 
 import NewDeskDialog from "@/features/desks/components/NewDeskDialog";
 import { Link } from "react-router-dom";
-import { useUser } from "../providers/UserProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchUserInfoThunk } from "@/redux/slices/userSlice";
+import { handleLogout } from "../auth/api";
 
 function Navbar() {
-  const { logout } = useUser();
+  const dispatch = useDispatch();
+  const { user, loading } = useSelector((state) => state.user);
+
+  // Fetch desks on mount
+  useEffect(() => {
+    dispatch(fetchUserInfoThunk());
+  }, [dispatch]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <ul>
@@ -85,10 +96,21 @@ function Navbar() {
 
         <MenubarMenu>
           <MenubarTrigger>
-            <Avatar />
+            {user.picture ? (
+              <img
+                src={user.picture}
+                alt="avatar"
+                className="w-8 h-8 rounded-full"
+              />
+            ) : (
+              <Avatar />
+            )}
           </MenubarTrigger>
           <MenubarContent>
-            <MenubarItem className="gap-2" onClick={() => logout()}>
+            <MenubarItem
+              className="gap-2"
+              onClick={async () => await handleLogout()}
+            >
               <Logout />
               Log Out
             </MenubarItem>
