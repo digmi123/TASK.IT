@@ -1,7 +1,7 @@
 import { NavLink, useParams } from "react-router-dom";
 import reactLogo from "../../assets/react.svg";
 function SideBar() {
-  const { id: boardId } = useParams();
+  const { deskId } = useParams();
 
   return (
     <nav className="h-screen text-card-foreground border shadow rounded-md">
@@ -14,7 +14,7 @@ function SideBar() {
         </li>
         <li>
           <NavLink
-            to={`board/${boardId}/members/workspace`}
+            to={`${deskId}/members/workspace`}
             className="flex items-center gap-4"
           >
             <img src={reactLogo} alt="logo" className="w-6 h-6" />
