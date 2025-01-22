@@ -1,14 +1,7 @@
-import { Outlet, useParams } from "react-router-dom";
-import BoardProvider from "../providers/BoardProvider";
+import { Outlet } from "react-router-dom";
 
 function BoardLayout() {
-  const { boardId } = useParams();
-
-  return (
-    <BoardProvider boardId={boardId}>
-      <Outlet />
-    </BoardProvider>
-  );
+  return <Outlet />;
 }
 
 export default BoardLayout;
