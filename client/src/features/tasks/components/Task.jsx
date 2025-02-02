@@ -36,7 +36,15 @@ function Task({ task }) {
 
         <div className="flex items-center justify-between gap-2 w-full">
           <div className="flex items-center gap-2">
-            <Avatar />
+            {task.user?.picture ? (
+              <img
+                src={task.user.picture}
+                alt="avatar"
+                className="w-8 h-8 rounded-full"
+              />
+            ) : (
+              <Avatar />
+            )}
             {/* <p>{task.createdAt}</p> */}
             <p className="text-foreground">Apr 11-18</p>
           </div>
