@@ -2,14 +2,37 @@ const express = require("express");
 const router = express.Router();
 const db = require("../db");
 const { templateBoards } = require("../api/consts");
+const { Op } = require("sequelize");
 
 router.get("/", async (req, res) => {
   const loggedUser = req.user;
-  const desks = await db.Desk.findAll({
-    where: { owner_id: loggedUser.id },
-    include: { model: db.Board },
-  });
-  res.status(200).json(desks);
+  try {
+    // Fetch owned and collaborated desks
+    const desks = await db.Desk.findAll({
+      include: [
+        // Include boards in each desk
+        { model: db.Board },
+        // Include collaborators (users linked via the many-to-many relationship)
+        {
+          model: db.User,
+          as: "collaboartors",
+          where: { id: loggedUser.id }, // Check if the logged-in user is a collaborator
+          required: false, // Allow inclusion of owned desks even if no collaborators
+        },
+      ],
+      where: {
+        [Op.or]: [
+          { owner_id: loggedUser.id }, // Desks where the logged-in user is the owner
+          { "$collaboartors.id$": loggedUser.id }, // Desks where the logged-in user is a collaborator
+        ],
+      },
+    });
+
+    res.status(200).json(desks);
+  } catch (error) {
+    console.error("Error fetching desks:", error);
+    res.status(500).json({ error: "Failed to fetch desks" });
+  }
 });
 
 router.post("/add-desk", async (req, res) => {
@@ -45,10 +68,13 @@ router.post("/add-desk", async (req, res) => {
 
 router.get("/:deskId", async (req, res) => {
   const deskId = Number(req.params.deskId);
-  const loggedUser = req.user;
+  // const loggedUser = req.user;
+  // TODO: check if Inside where clause i need to add , owner_id: loggedUser.id
+  // right now i fetch desks to get boards.
+  // I can get the same result through the desks list i have on desks provider.
 
   const desk = await db.Desk.findOne({
-    where: { id: deskId, owner_id: loggedUser.id },
+    where: { id: deskId },
     include: { model: db.Board },
   });
   res.status(200).json(desk);
@@ -56,8 +82,6 @@ router.get("/:deskId", async (req, res) => {
 
 router.get("/:deskId/members", async (req, res) => {
   const deskId = Number(req.params.deskId);
-  // const loggedUser = req.user;
-
   const desk = await db.Desk.findOne({
     where: { id: deskId },
     include: { model: db.User, as: "collaboartors" },
