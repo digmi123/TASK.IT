@@ -18,30 +18,32 @@ function Column({ column }) {
       id="column-wrapper"
       key={column.id}
       ref={setNodeRef}
-      className="bg-slate-200 h-full min-w-48 border shadow rounded-md"
+      className="bg-slate-200 min-w-60 border shadow rounded-md flex flex-col items-center gap-2 p-2 h-full"
+      style={style}
     >
-      <div className="flex flex-col items-center gap-2 p-2 h-fit" style={style}>
-        <div className="w-full flex items-center gap-2 justify-around m-2">
-          <h2 className="text-xl font-semibold">{column.name}</h2>
-          <NewTaskDialog columnId={column.id}>
-            <button>
-              <Add />
-            </button>
-          </NewTaskDialog>
-        </div>
-
-        <div id="tasks-wrapper" className="flex flex-col gap-4">
-          {column.tasks.map((task, index) => {
-            return <Task key={`${task.name}-${index}`} task={task} />;
-          })}
-        </div>
-
+      <div className="w-full flex items-center gap-2 justify-around m-2">
+        <h2 className="text-xl font-semibold">{column.name}</h2>
         <NewTaskDialog columnId={column.id}>
-          <Button className="w-full" variant="secondary">
-            Add Task
-          </Button>
+          <button>
+            <Add />
+          </button>
         </NewTaskDialog>
       </div>
+
+      <div
+        id="tasks-wrapper"
+        className="flex flex-col gap-4 overflow-auto pe-2"
+      >
+        {column.tasks.map((task, index) => {
+          return <Task key={`${task.name}-${index}`} task={task} />;
+        })}
+      </div>
+
+      <NewTaskDialog columnId={column.id}>
+        <Button className="w-full" variant="secondary">
+          Add Task
+        </Button>
+      </NewTaskDialog>
     </div>
   );
 }

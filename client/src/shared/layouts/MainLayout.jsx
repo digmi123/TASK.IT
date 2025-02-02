@@ -3,7 +3,7 @@ import SideBar from "../components/SideBar";
 
 export default function MainLayout() {
   return (
-    <div id="main-page" className="grid grid-cols-[200px_1fr]">
+    <div id="main-page" className="flex overflow-auto h-full">
       <SideBar />
       <Outlet />
     </div>

@@ -6,8 +6,10 @@ import { store } from "@/redux/store";
 function AppLayout() {
   return (
     <Provider store={store}>
-      <Navbar />
-      <Outlet />
+      <div id="app-wrapper" className="h-screen overflow-auto flex flex-col">
+        <Navbar />
+        <Outlet />
+      </div>
     </Provider>
   );
 }
