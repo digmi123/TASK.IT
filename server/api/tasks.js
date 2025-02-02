@@ -22,8 +22,10 @@ router.put("/:taskId", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const { title, description, priority, parent_column } = req.body.task;
+  const loggedUser = req.user;
 
   const newTask = {
+    owner_id: loggedUser.id,
     title,
     description,
     parent_column,
