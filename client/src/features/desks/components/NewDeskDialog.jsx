@@ -32,9 +32,7 @@ function NewDeskDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="m-4" variant="secondary">
-          Create Desk
-        </Button>
+        <Button variant="secondary">Create Desk</Button>
       </DialogTrigger>
       <DialogContent className="max-w-fit">
         <DialogHeader>
