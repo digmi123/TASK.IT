@@ -13,16 +13,8 @@ export const fetchDesksThunk = createAsyncThunk(
 export const addNewDeskThunk = createAsyncThunk(
   "desks/addNewDesk",
   async ({ deskName, template }, { dispatch }) => {
-    console.log({ deskName, template });
-
     const newDesk = await addNewDeskApi({ deskName, template });
     dispatch(addDesk(newDesk));
-    addNewDeskApi({ deskName, template }).catch((error) => {
-      // Handle error: Rollback the optimistic update
-      console.error("Failed to update the backend:", error);
-      // Rollback state to maintain consistency
-      // dispatch(removeTask({ parentColumn: targetColumn, id: task.id }));
-    });
   }
 );
 
