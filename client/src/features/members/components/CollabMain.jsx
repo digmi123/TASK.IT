@@ -1,13 +1,24 @@
 import { Button } from "@/components/ui/button";
 import AddIcon from "@/assets/add.svg?react";
 import { useDeskMembers } from "../hooks/useDeskMembers";
-import Member from "./Member";
 import ZeroDeskMembers from "./ZeroDeskMembers";
+import { Hourglass } from "react-loader-spinner";
+import WorkspaceMembers from "./WorkspaceMembers";
+import Divider from "@/shared/components/Divider";
 
 export default function CollabMain() {
   const { members, loading } = useDeskMembers();
 
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <Hourglass
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="hourglass-loading"
+        colors={["#306cce", "#72a1ed"]}
+      />
+    );
   if (members.length === 0) return <ZeroDeskMembers />;
 
   return (
@@ -22,11 +33,7 @@ export default function CollabMain() {
         </p>
       </div>
 
-      <hr
-        id="divider"
-        className="w-full h-[1px] bg-slate-300 rounded-md my-4 border-0"
-      />
-
+      <Divider />
       <div id="second-content">
         <h2 className="font-semibold text-xl">Invite members to join you</h2>
         <div className="flex items-start gap-4">
@@ -42,22 +49,8 @@ export default function CollabMain() {
         </div>
       </div>
 
-      <hr
-        id="divider"
-        className="w-full h-[1px] bg-slate-300 rounded-md my-4 border-0"
-      />
-
-      <div id="third-content">
-        {members.map((member) => (
-          <div
-            id="members-table"
-            key={member.id}
-            className="flex flex-col gap-4"
-          >
-            <Member member={member} />
-          </div>
-        ))}
-      </div>
+      <Divider />
+      <WorkspaceMembers members={members} />
     </div>
   );
 }
