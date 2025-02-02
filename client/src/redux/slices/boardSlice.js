@@ -96,6 +96,13 @@ const boardSlice = createSlice({
       );
       if (column) column.tasks = column.tasks.filter((task) => task.id !== id);
     },
+    addTaskComment: (state, action) => {
+      const { taskId, parentColumn, comment } = action.payload;
+      const task = state.boardData.columns
+        .find((column) => column.id === parentColumn)
+        .tasks.find((task) => task.id === taskId);
+      task.Comments.push(comment);
+    },
   },
 
   extraReducers: (builder) => {
@@ -130,6 +137,6 @@ const boardSlice = createSlice({
   },
 });
 
-export const { addColumn, removeTask, addTask, addNewTask } =
+export const { addColumn, removeTask, addTask, addNewTask, addTaskComment } =
   boardSlice.actions;
 export default boardSlice.reducer;
