@@ -16,15 +16,26 @@ import Comments from "@/assets/comments.svg?react";
 import Avatar from "@/assets/user.svg?react";
 import { Input } from "@/components/ui/input";
 import bg from "@/assets/task-bg.jpg";
-import { addComment, getTask } from "@/features/task/api";
+import { addComment } from "@/features/task/api";
+import { useDispatch } from "react-redux";
+import { addTaskComment } from "@/redux/slices/boardSlice";
 // import { useGetTask } from "@/features/task/hooks/useGetTask";
 
 export default function TaskDialog({ task, children }) {
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState("");
+  const dispatch = useDispatch();
 
   const handleComment = () => {
-    addComment({ comment, taskId: task.id });
+    addComment({ comment, taskId: task.id }).then(() =>
+      dispatch(
+        addTaskComment({
+          taskId: task.id,
+          parentColumn: task.parent_column,
+          comment: { content: comment },
+        })
+      )
+    );
   };
 
   return (
@@ -78,9 +89,9 @@ export default function TaskDialog({ task, children }) {
               <Button onClick={() => handleComment()}>Send</Button>
             </div>
 
-            {task.Comments.map((comment) => {
+            {task.Comments.map((comment, index) => {
               return (
-                <div className="flex gap-4" key={comment.id}>
+                <div className="flex gap-4" key={`${comment}-${index}`}>
                   <Avatar style={{ width: "35px", height: "35px" }} />
                   <p>{comment.content}</p>
                 </div>
