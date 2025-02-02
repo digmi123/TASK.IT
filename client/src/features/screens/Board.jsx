@@ -1,18 +1,26 @@
-import { DndContext, MouseSensor, useSensor, useSensors } from "@dnd-kit/core";
+import {
+  DndContext,
+  DragOverlay,
+  MouseSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
 import Columns from "../columns/components/Columns";
 import BoardBar from "../board/BoardBar";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   fetchBoardThunk,
   updateTaskColumn as updateTaskColumnRedux,
 } from "@/redux/slices/boardSlice";
 import { useParams } from "react-router-dom";
+import Task from "../tasks/components/Task";
 
 function Board() {
   const { boardId } = useParams();
   const dispatch = useDispatch();
   const { boardData, loading } = useSelector((state) => state.board);
+  const [draggedTask, setDraggedTask] = useState(null);
 
   useEffect(() => {
     dispatch(fetchBoardThunk(boardId));
@@ -42,14 +50,29 @@ function Board() {
   const handleDragEnd = (event) => {
     const { active, over } = event;
     updateTaskColumn(over.id, active);
+    setDraggedTask(null);
+  };
+
+  const handleDragStart = (event) => {
+    const { active } = event;
+    setDraggedTask(active.data.current);
+    console.log("active", active);
   };
 
   return (
-    <div className="flex flex-col overflow-hidden">
+    <div className="flex flex-col flex-grow overflow-auto">
       <BoardBar boardName={boardData.name} />
 
-      <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
+      <DndContext
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        sensors={sensors}
+      >
         <Columns columns={boardData.columns} />
+
+        <DragOverlay>
+          {draggedTask ? <Task task={draggedTask} /> : null}
+        </DragOverlay>
       </DndContext>
     </div>
   );
