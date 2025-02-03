@@ -1,6 +1,5 @@
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import reactLogo from "@/assets/react.svg";
-import Desk from "@/assets/desk.svg?react";
 import Settings from "@/assets/settings.svg?react";
 
 import {
@@ -9,6 +8,9 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { useSelector } from "react-redux";
+import DesksBar from "./DesksBar";
+import Organizations from "@/shared/components/Organizations";
+import Divider from "@/shared/components/Divider";
 
 export default function Sidebar() {
   const { desks } = useSelector((state) => state.desks);
@@ -49,29 +51,10 @@ export default function Sidebar() {
         </Collapsible>
       </div>
 
-      <hr
-        id="divider"
-        className="w-full h-[1px] bg-slate-300 rounded-md my-4 border-0"
-      />
-
-      <div id="desks">
-        <h2 className="font-semibold text-xl my-2">My desks</h2>
-        <div className="flex flex-col gap-4">
-          {desks.map((desk) => (
-            <Link key={desk.id} to={`/${desk.id}`}>
-              <li className="flex items-center gap-4">
-                <div
-                  id="desk-icon"
-                  className="bg-primary rounded-md p-1 flex items-center justify-center"
-                >
-                  <Desk style={{ color: "white" }} />
-                </div>
-                {desk.name}
-              </li>
-            </Link>
-          ))}
-        </div>
-      </div>
+      <Divider />
+      <DesksBar desks={desks} />
+      <Divider />
+      <Organizations />
     </ul>
   );
 }
