@@ -6,11 +6,13 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
+    /* --card: 0 0% 100%; */
+    --card: 215 16.3% 46.9%;
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 346.8 77.2% 49.8%;
+    --primary: 221.2 83.2% 53.3%;
+    /* --primary: 346.8 77.2% 49.8%; */
     --primary-foreground: 355.7 100% 97.3%;
     --secondary: 240 4.8% 95.9%;
     --secondary-foreground: 240 5.9% 10%;
@@ -22,7 +24,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
     --input: 240 5.9% 90%;
-    --ring: 346.8 77.2% 49.8%;
+    --ring: 191 42% 40%;
     --radius: 0.5rem;
     --chart-1: 12 76% 61%;
     --chart-2: 173 58% 39%;
@@ -47,7 +49,7 @@
     --card-foreground: 0 0% 95%;
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 95%;
-    --primary: 346.8 77.2% 49.8%;
+    --primary: 171 76.9% 64.3%;
     --primary-foreground: 355.7 100% 97.3%;
     --secondary: 240 3.7% 15.9%;
     --secondary-foreground: 0 0% 98%;
@@ -77,22 +79,34 @@
   }
 }
 
+*::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #F5F5F5;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #a6a6a6;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-.root {
-  height: 100vh;
-  height: 100dvh;
-}
+#root {}
 
 body {
   margin: 0;
-  width: 100vw;
-  min-height: 100vh;
-  min-height: 100dvh;
 }
 
 @layer base {
