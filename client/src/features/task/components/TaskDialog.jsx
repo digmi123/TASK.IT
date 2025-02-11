@@ -12,43 +12,23 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import View from "@/assets/view.svg?react";
 import Description from "@/assets/description.svg?react";
-import Comments from "@/assets/comments.svg?react";
-import Avatar from "@/assets/user.svg?react";
-import { Input } from "@/components/ui/input";
 import bg from "@/assets/task-bg.jpg";
-import { addComment } from "@/features/task/api";
-import { useDispatch } from "react-redux";
-import { addTaskComment } from "@/redux/slices/boardSlice";
-// import { useGetTask } from "@/features/task/hooks/useGetTask";
+import Comments from "@/features/task/components/Coments";
 
 export default function TaskDialog({ task, children }) {
   const [open, setOpen] = useState(false);
-  const [comment, setComment] = useState("");
-  const dispatch = useDispatch();
-
-  const handleComment = () => {
-    addComment({ comment, taskId: task.id }).then(() =>
-      dispatch(
-        addTaskComment({
-          taskId: task.id,
-          parentColumn: task.parent_column,
-          comment: { content: comment },
-        })
-      )
-    );
-  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-w-fit">
+      <DialogContent className="w-[600px]">
         <DialogHeader>
           <DialogTitle>New Task</DialogTitle>
           <DialogDescription>Add your own task.</DialogDescription>
         </DialogHeader>
 
         <div className="flex flex-col gap-4">
-          <img src={bg} alt="background-image" className="h-[300px]" />
+          <img src={bg} alt="background-image" className="h-[200px]" />
 
           <div className="flex flex-col items-start gap-4">
             <div className="flex gap-4">
@@ -68,37 +48,9 @@ export default function TaskDialog({ task, children }) {
             id="divider"
             className="w-full h-[1px] bg-slate-300 rounded-md my-4 border-0"
           />
-
-          <section
-            id="comments-section"
-            className="flex flex-col items-start gap-4"
-          >
-            <div className="flex gap-4">
-              <Comments />
-              <h3>Comments</h3>
-            </div>
-
-            <div id="comment-input" className="flex gap-4 w-full">
-              <Avatar style={{ width: "35px", height: "35px" }} />
-              <Input
-                type="text"
-                placeholder="Write a comment..."
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-              <Button onClick={() => handleComment()}>Send</Button>
-            </div>
-
-            {task.Comments.map((comment, index) => {
-              return (
-                <div className="flex gap-4" key={`${comment}-${index}`}>
-                  <Avatar style={{ width: "35px", height: "35px" }} />
-                  <p>{comment.content}</p>
-                </div>
-              );
-            })}
-          </section>
         </div>
+
+        <Comments task={task} />
 
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
