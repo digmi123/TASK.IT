@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import SideBar from "../components/SideBar";
+// import SideBar from "../components/SideBar";
 
 export default function MainLayout() {
   return (
     <div id="main-page" className="flex overflow-auto h-full">
-      <SideBar />
+      {/* <SideBar /> */}
       <Outlet />
     </div>
   );
