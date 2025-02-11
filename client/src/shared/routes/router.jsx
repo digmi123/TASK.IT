@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import MainLayout from "../layouts/mainLayout";
 import Board from "../../features/screens/Board";
 import Boards from "@/features/screens/Boards";
 import Login from "@/features/screens/Login";
@@ -8,9 +7,9 @@ import Members from "@/features/screens/Members";
 import CollabMain from "@/features/members/components/CollabMain";
 import Guests from "@/features/members/components/Guests";
 import Desks from "@/features/screens/Desks";
-import HomeLayout from "../layouts/HomeLayout";
+import Home from "../../features/screens/Home";
 import AppLayout from "../layouts/AppLayout";
-import BoardLayout from "../layouts/BoardLayout";
+import Organization from "@/features/organizations/components/Organization";
 
 const router = createBrowserRouter([
   {
@@ -28,36 +27,19 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        element: <HomeLayout />,
-        children: [
-          {
-            path: "/",
-            element: <Desks />,
-          },
-        ],
+        index: true,
+        element: <Home />,
       },
-
       {
-        element: <MainLayout />,
+        path: "desks",
+        element: <Desks />,
+      },
+      {
+        path: "/organization/:organizationId",
+        element: <Organization />,
         children: [
           {
-            path: ":deskId",
-            element: <Boards />,
-          },
-
-          {
-            path: ":deskId/:boardId",
-            element: <BoardLayout />,
-            children: [
-              {
-                path: "",
-                element: <Board />,
-              },
-            ],
-          },
-
-          {
-            path: ":deskId/members",
+            path: "members",
             element: <Members />,
             children: [
               {
@@ -73,6 +55,32 @@ const router = createBrowserRouter([
                 element: <h1>Requests</h1>,
               },
             ],
+          },
+        ],
+      },
+      {
+        path: ":deskId",
+        element: <Boards />,
+      },
+      {
+        path: ":deskId/:boardId",
+        element: <Board />,
+      },
+      {
+        path: ":deskId/members",
+        element: <Members />,
+        children: [
+          {
+            path: "workspace",
+            element: <CollabMain />,
+          },
+          {
+            path: "guests",
+            element: <Guests />,
+          },
+          {
+            path: "requests",
+            element: <h1>Requests</h1>,
           },
         ],
       },
