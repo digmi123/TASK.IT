@@ -1,16 +1,15 @@
 import TemplateIcon from "@/assets/template.svg?react";
 import { Button } from "@/components/ui/button";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Add from "@/assets/add.svg?react";
 import NewBoardDialog from "@/features/board/components/NewBoardDialog";
 import { useBoards } from "@/features/board/hooks/useBoards";
-import { deskSectionActions } from "../consts";
 import Desk from "@/assets/desk.svg?react";
-import { Fragment } from "react";
+import BoardsCards from "./BoardsCards";
 
 export default function DeskSection({ desk }) {
   const navigate = useNavigate();
-  const { boards, addBoard } = useBoards(desk.id);
+  const { boards, loading, addBoard } = useBoards(desk.id);
 
   if (desk.pending) return <div>Loading...</div>;
 
@@ -27,45 +26,36 @@ export default function DeskSection({ desk }) {
         </div>
 
         <div id="desk-actions" className="flex items-center gap-4">
-          {deskSectionActions.map((action) => (
-            <Fragment key={`${desk.name}-${action.name}`}>
-              <Button onClick={() => navigate(`/${desk.id}/members/workspace`)}>
-                <TemplateIcon />
-                Members
-              </Button>
+          <Button asChild>
+            <Link to={`/${desk.id}/members/workspace`}>
+              <TemplateIcon />
+              Members
+            </Link>
+          </Button>
 
-              {/* <Button onClick={() => navigate(`/${desk.id}/members/workspace`)}>
-                <TemplateIcon />
-                Boards
-              </Button> */}
+          <Button asChild>
+            <Link to={`/${desk.id}`}>
+              <TemplateIcon />
+              Boards
+            </Link>
+          </Button>
 
-              <Button key={action.name}>
-                <TemplateIcon />
-                {action.name}
-              </Button>
-            </Fragment>
-          ))}
+          <Button asChild>
+            <Link>
+              <TemplateIcon />
+              Settings
+            </Link>
+          </Button>
         </div>
       </div>
 
       <div id="wrapper" className="flex gap-4">
-        {boards.map((board) => (
-          <NavLink
-            to={`${desk.id}/${board.id}`}
-            key={board.id}
-            id="template"
-            className="w-56 h-24 bg-card rounded-md"
-          >
-            <div id="inner-template-card" className="py-2 px-4">
-              <h2 className="text-white">{board.name}</h2>
-            </div>
-          </NavLink>
-        ))}
+        <BoardsCards boards={boards} desk={desk} loading={loading} />
 
         <NewBoardDialog addBoard={addBoard}>
           <Button
             id="new-board"
-            className="flex gap-3 items-center w-56 h-24 bg-card rounded-md p-0 justify-center"
+            className="flex gap-3 items-center w-56 h-24 bg-card rounded-md p-0 justify-center transition-all duration-500 hover:bg-primary"
           >
             <Add style={{ width: "4rem", height: "4rem" }} />
           </Button>
