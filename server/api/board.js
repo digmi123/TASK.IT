@@ -10,7 +10,10 @@ router.get("/:boardId", async (req, res) => {
       model: db.Column,
       include: {
         model: db.Task,
-        include: [{ model: db.Comment }, { model: db.User }],
+        include: [
+          { model: db.Comment, include: { model: db.User } },
+          { model: db.User },
+        ],
       },
     },
   });
