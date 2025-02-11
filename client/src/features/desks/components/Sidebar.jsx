@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import reactLogo from "@/assets/react.svg";
 import Settings from "@/assets/settings.svg?react";
+import HomeIcon from "@/assets/home.svg?react";
+import DesksIcon from "@/assets/desk.svg?react";
 
 import {
   Collapsible,
@@ -11,6 +13,9 @@ import { useSelector } from "react-redux";
 import DesksBar from "./DesksBar";
 import Organizations from "@/shared/components/Organizations";
 import Divider from "@/shared/components/Divider";
+import { cn } from "@/lib/utils";
+
+const activeStyle = "bg-primary/70 text-white shadow rounded-md font-semibold";
 
 export default function Sidebar() {
   const { desks } = useSelector((state) => state.desks);
@@ -18,14 +23,30 @@ export default function Sidebar() {
   return (
     <ul className="w-[256px]">
       <div id="upper-links" className="flex flex-col gap-4">
-        <NavLink className="flex items-center gap-4 w-full">
-          <Settings />
-          <li className="font-semibold">Boards</li>
+        <NavLink
+          className={({ isActive }) =>
+            cn(
+              "flex items-center gap-4 w-full p-2 hover:bg-primary/50 rounded-md",
+              isActive && activeStyle
+            )
+          }
+          to="/"
+        >
+          <HomeIcon />
+          <li className="font-semibold">Home</li>
         </NavLink>
 
-        <NavLink className="flex items-center gap-4 w-full">
-          <Settings />
-          <li className="font-semibold">Boards</li>
+        <NavLink
+          className={({ isActive }) =>
+            cn(
+              "flex items-center gap-4 w-full p-2 hover:bg-primary/50 rounded-md",
+              isActive && activeStyle
+            )
+          }
+          to="desks"
+        >
+          <DesksIcon />
+          <li className="font-semibold">Desks</li>
         </NavLink>
 
         <Collapsible>

@@ -13,5 +13,6 @@ router.use("/board", require("./board"));
 router.use("/columns", require("./columns"));
 router.use("/tasks", require("./tasks"));
 router.use("/desks", require("./desks"));
+router.use("/organizations", require("./organizations"));
 
 module.exports = router;
