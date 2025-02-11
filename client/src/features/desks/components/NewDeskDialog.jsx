@@ -12,9 +12,9 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import TemplateCard from "@/shared/components/TemplateCard";
-import NewMemberAvatar from "@/features/members/components/NewMemberAvatar";
 import { addNewDeskThunk } from "@/redux/slices/desksSlice";
 import { useDispatch } from "react-redux";
+import UsersSearch from "@/shared/components/UsersSearch";
 
 function NewDeskDialog() {
   const dispatch = useDispatch();
@@ -62,27 +62,7 @@ function NewDeskDialog() {
             className="w-full h-[1px] bg-slate-300 rounded-md my-4 border-0"
           />
 
-          <div id="new-members-section" className="flex flex-col gap-4">
-            <div id="new-members-header" className="flex items-center gap-4">
-              <h2 className="text-2xl font-semibold">Add Members</h2>
-              <Input
-                type="text"
-                placeholder="Search"
-                name="member_name"
-                className="w-fit"
-              />
-            </div>
-            <div
-              id="new-members-wrapper"
-              className="flex gap-4 overflow-x-auto"
-            >
-              <NewMemberAvatar />
-              <NewMemberAvatar />
-              <NewMemberAvatar />
-              <NewMemberAvatar />
-            </div>
-          </div>
-
+          <UsersSearch />
           <Button type="submit">Save</Button>
         </form>
 
