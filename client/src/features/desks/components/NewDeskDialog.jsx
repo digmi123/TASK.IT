@@ -63,16 +63,20 @@ function NewDeskDialog() {
           />
 
           <UsersSearch />
-          <Button type="submit">Save</Button>
-        </form>
-
-        <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
+          <div className="flex w-full gap-4">
+            <Button type="submit" className="flex-1">
+              Save
             </Button>
-          </DialogClose>
-        </DialogFooter>
+
+            <DialogFooter className="sm:justify-start">
+              <DialogClose asChild>
+                <Button type="button" variant="destructive">
+                  Close
+                </Button>
+              </DialogClose>
+            </DialogFooter>
+          </div>
+        </form>
       </DialogContent>
     </Dialog>
   );
