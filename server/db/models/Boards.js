@@ -14,10 +14,10 @@ const Boards = sequelize.define("boards", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  // owner_id: {
-  //   type: DataTypes.INTEGER,
-  //   allowNull: false,
-  // },
+  background_image: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 });
 
 // Define User Boards associations.

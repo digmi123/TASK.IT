@@ -23,6 +23,17 @@ function Board() {
   const [draggedTask, setDraggedTask] = useState(null);
 
   useEffect(() => {
+    if (boardData.background_image) {
+      document.body.classList.add("bg-cover", "bg-center", "bg-no-repeat");
+      document.body.style.backgroundImage = `url(${boardData.background_image})`;
+    }
+    return () => {
+      document.body.classList.remove("bg-cover", "bg-center", "bg-no-repeat");
+      document.body.style.backgroundImage = "";
+    };
+  }, [boardData.background_image]);
+
+  useEffect(() => {
     dispatch(fetchBoardThunk(boardId));
   }, [boardId, dispatch]);
 
@@ -35,8 +46,9 @@ function Board() {
 
   if (loading) return <h1>Loading...</h1>;
 
-  const updateTaskColumn = async (newColumnId, task) => {
+  const updateTaskColumn = (newColumnId, task) => {
     const { parent_column } = task.data.current;
+    if (!parent_column) return;
     //State update.
     dispatch(
       updateTaskColumnRedux({
@@ -56,11 +68,10 @@ function Board() {
   const handleDragStart = (event) => {
     const { active } = event;
     setDraggedTask(active.data.current);
-    console.log("active", active);
   };
 
   return (
-    <div className="flex flex-col flex-grow overflow-auto">
+    <>
       <BoardBar boardName={boardData.name} />
 
       <DndContext
@@ -68,13 +79,13 @@ function Board() {
         onDragEnd={handleDragEnd}
         sensors={sensors}
       >
-        <Columns columns={boardData.columns} />
+        <Columns columns={boardData.columns} draggedTask={draggedTask} />
 
         <DragOverlay>
           {draggedTask ? <Task task={draggedTask} /> : null}
         </DragOverlay>
       </DndContext>
-    </div>
+    </>
   );
 }
 
