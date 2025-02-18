@@ -1,16 +1,9 @@
 import TemplateIcon from "@/assets/template.svg?react";
 import DeskSection from "./DeskSection";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchDesksThunk } from "@/redux/slices/desksSlice";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function Desks() {
-  const dispatch = useDispatch();
   const { desks, loading } = useSelector((state) => state.desks);
-  // Fetch desks on mount
-  useEffect(() => {
-    dispatch(fetchDesksThunk());
-  }, [dispatch]);
 
   if (loading) return <div>Loading...</div>;
 
