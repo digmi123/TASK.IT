@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import PrioritySection from "../../tasks/components/PrioritySection";
 import { useDispatch } from "react-redux";
 import { addNewTaskThunk } from "@/redux/slices/boardSlice";
+import { Textarea } from "@/components/ui/textarea";
 
 function NewTask({ columnId, setOpen }) {
   const dispatch = useDispatch();
@@ -26,11 +27,7 @@ function NewTask({ columnId, setOpen }) {
   return (
     <form className="flex flex-col gap-4" onSubmit={handleNewTask}>
       <Input type="text" placeholder="Task name" name="task_name" />
-      <Input
-        type="text"
-        placeholder="Task description"
-        name="task_description"
-      />
+      <Textarea placeholder="Task description" name="task_description" />
       {/* Priority tags */}
       <PrioritySection />
       <Button type="submit">Add Task</Button>
