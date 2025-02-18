@@ -3,7 +3,7 @@ import NewColumn from "./NewColumn";
 
 function Columns({ columns, draggedTask }) {
   return (
-    <div className="flex gap-3 p-4 flex-grow overflow-auto group bg-center">
+    <div className="flex gap-3 p-4 grow overflow-auto group bg-center">
       {columns.map((column) => (
         <Column key={column.id} column={column} draggedTask={draggedTask} />
       ))}

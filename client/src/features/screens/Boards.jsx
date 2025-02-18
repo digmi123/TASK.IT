@@ -17,7 +17,7 @@ export default function Boards() {
   return (
     <div
       id="boards-wrapper"
-      className="grid grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))] h-fit p-4 gap-4 w-full"
+      className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] h-fit p-4 gap-4 w-full"
     >
       {boards.map((board) => {
         return <BoardCard key={board.id} id={board.id} boardInfo={board} />;

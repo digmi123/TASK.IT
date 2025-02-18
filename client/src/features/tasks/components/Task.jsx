@@ -25,7 +25,7 @@ function Task({ task, draggedStyle, demo }) {
   return (
     <TaskDialog task={task}>
       <div
-        className="bg-white p-4 rounded-md w-60 max-w-60 shadow flex flex-col items-start gap-4"
+        className="bg-white p-4 rounded-md w-60 max-w-60 shadow-sm flex flex-col items-start gap-4"
         ref={setNodeRef}
         style={style}
         {...listeners}

@@ -11,7 +11,7 @@ function AppLayout() {
         <Navbar />
         <div className="flex gap-16 h-full overflow-auto">
           <SideBar />
-          <main className="flex flex-col gap-6 overflow-auto flex-grow pr-4 py-8 px-12">
+          <main className="flex flex-col gap-6 overflow-auto grow pr-4 py-8 px-12">
             <Outlet />
           </main>
         </div>

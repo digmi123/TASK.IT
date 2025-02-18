@@ -3,7 +3,7 @@ export default function BoardBar({ boardName }) {
   return (
     <div
       id="upper-bar"
-      className="rounded-md shadow p-4 flex justify-between items-center"
+      className="rounded-md shadow-sm p-4 flex justify-between items-center"
     >
       <div id="left-side" className="flex gap-4 items-center">
         <h3 className="text-xl font-bold">{boardName}</h3>

@@ -19,7 +19,7 @@ function Register() {
       className="flex flex-col items-center justify-center w-screen h-screen"
     >
       <form
-        className="flex flex-col gap-4 justify-around min-w-[400px] h-[300px] p-4 rounded shadow"
+        className="flex flex-col gap-4 justify-around min-w-[400px] h-[300px] p-4 rounded shadow-sm"
         onSubmit={handleSubmit}
       >
         <h1 className="text-2xl font-bold">Sign Up</h1>

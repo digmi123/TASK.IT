@@ -17,7 +17,7 @@ function Column({ column, draggedTask }) {
       id="column-wrapper"
       key={column.id}
       ref={setNodeRef}
-      className="bg-slate-200 min-w-72 border shadow rounded-md flex flex-col items-center gap-2 p-2 h-full"
+      className="bg-slate-200 min-w-72 border shadow-sm rounded-md flex flex-col items-center gap-2 p-2 h-full"
     >
       <div className="w-full flex items-center gap-2 justify-around m-2">
         <h2 className="text-xl font-semibold">{column.name}</h2>

@@ -18,7 +18,7 @@ function NewColumnForm({ setOpen }) {
   return (
     <div
       id="column-name-input"
-      className="flex flex-col gap-3 p-4 h-fit shadow rounded-md"
+      className="flex flex-col gap-3 p-4 h-fit shadow-sm rounded-md"
     >
       <input
         type="text"

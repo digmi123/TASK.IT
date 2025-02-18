@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
 import { sideBarRoutes } from "../consts";
 
-const activeLinkClasName = "bg-primary text-white shadow";
+const activeLinkClasName = "bg-primary text-white shadow-sm";
 const LinkClassName = "border-primary border-2 text-primary";
 
 export default function CollaboratorsSideBar() {

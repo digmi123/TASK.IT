@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 import { fetchDesksThunk } from "@/redux/slices/desksSlice";
 
-const activeStyle = "bg-primary/70 text-white shadow rounded-md font-semibold";
+const activeStyle = "bg-primary/70 text-white shadow-sm rounded-md font-semibold";
 
 export default function Sidebar() {
   const { desks } = useSelector((state) => state.desks);

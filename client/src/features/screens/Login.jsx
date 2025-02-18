@@ -29,7 +29,7 @@ function Login() {
       className="flex flex-col items-center justify-center w-screen h-screen gap-4"
     >
       <form
-        className="flex flex-col gap-4 justify-around min-w-[400px] h-[300px] p-4 rounded shadow"
+        className="flex flex-col gap-4 justify-around min-w-[400px] h-[300px] p-4 rounded shadow-sm"
         onSubmit={handleSubmit}
       >
         <h1 className="text-2xl font-bold">Enter Login Information</h1>
@@ -48,7 +48,7 @@ function Login() {
 
       <Button
         variant="outlined"
-        className="border-2 rounded shadow"
+        className="border-2 rounded shadow-sm"
         onClick={auth}
       >
         <Mail /> Sign in with Gmail
