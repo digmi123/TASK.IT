@@ -30,15 +30,7 @@ function UsersSearch() {
             className="flex flex-col items-center gap-1"
             key={user.id}
           >
-            {user.picture ? (
-              <img
-                src={user.picture}
-                alt="avatar"
-                className="w-12 h-12 rounded-full"
-              />
-            ) : (
-              <NewMemberAvatar email={user.email} />
-            )}
+            <NewMemberAvatar user={user} />
             <p className="text-center">{user.name || "User"}</p>
           </div>
         ))}
