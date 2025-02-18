@@ -2,24 +2,26 @@ import { cn } from "@/lib/utils";
 import { NavLink } from "react-router-dom";
 import { sideBarRoutes } from "../consts";
 
-const activeLinkClasName =
-  "bg-primary text-white shadow rounded-md font-semibold";
+const activeLinkClasName = "bg-primary text-white shadow";
+const LinkClassName = "border-primary border-2 text-primary";
+
 export default function CollaboratorsSideBar() {
   return (
-    <ul id="colab-sidebar" className="flex flex-col gap-4">
+    <div id="colab-sidebar" className="flex gap-4">
       {sideBarRoutes.map((route) => (
         <NavLink
           key={route.name}
           to={route.path}
           className={({ isActive }) =>
-            cn("min-w-48", isActive ? activeLinkClasName : "")
+            cn(
+              "min-w-48 rounded-md p-2 flex items-center font-semibold",
+              isActive ? activeLinkClasName : LinkClassName
+            )
           }
         >
-          <li>
-            <h3 className="px-2 py-2">{route.name}</h3>
-          </li>
+          {route.name}
         </NavLink>
       ))}
-    </ul>
+    </div>
   );
 }
