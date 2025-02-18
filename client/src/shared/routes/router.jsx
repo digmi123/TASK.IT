@@ -1,15 +1,16 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Outlet } from "react-router-dom";
 import Board from "../../features/screens/Board";
 import Boards from "@/features/screens/Boards";
 import Login from "@/features/screens/Login";
 import Register from "@/features/screens/Register";
-import Members from "@/features/screens/Members";
 import CollabMain from "@/features/members/components/CollabMain";
 import Guests from "@/features/members/components/Guests";
 import Desks from "@/features/screens/Desks";
 import Home from "../../features/screens/Home";
 import AppLayout from "../layouts/AppLayout";
 import Organization from "@/features/organizations/components/Organization";
+import DeskMembers from "@/features/desks/components/DeskMembers";
+import OrganizationParticipant from "@/features/organizations/components/OrganizationParticipant";
 
 const router = createBrowserRouter([
   {
@@ -36,11 +37,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/organization/:organizationId",
-        element: <Organization />,
+        element: <Outlet />,
         children: [
           {
+            index: true,
+            element: <Organization />,
+          },
+          {
             path: "members",
-            element: <Members />,
+            element: <OrganizationParticipant />,
             children: [
               {
                 path: "workspace",
@@ -68,7 +73,7 @@ const router = createBrowserRouter([
       },
       {
         path: ":deskId/members",
-        element: <Members />,
+        element: <DeskMembers />,
         children: [
           {
             path: "workspace",
