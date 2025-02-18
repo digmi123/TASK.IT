@@ -15,7 +15,7 @@ function BoardsCards({ boards, desk, loading }) {
     <>
       {boards.map((board) => (
         <NavLink
-          to={`${desk.id}/${board.id}`}
+          to={`/${desk.id}/${board.id}`}
           key={board.id}
           id="board"
           className="w-56 h-24 bg-card rounded-md"
