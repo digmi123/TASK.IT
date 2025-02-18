@@ -2,10 +2,9 @@ import avatar from "@/assets/user.svg";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import AddIcon from "@/assets/add.svg?react";
+import NewMemberAvatar from "@/features/members/components/NewMemberAvatar";
 
 function OrganizationMembers({ organization }) {
-  console.log({ organization });
-
   const visibleParticipants = organization.members.slice(0, 5);
   return (
     <div id="manage-members" className="flex items-center gap-4 justify-around">
@@ -19,24 +18,18 @@ function OrganizationMembers({ organization }) {
       <div id="start-side" className="flex items-center gap-4">
         <div
           id="participants-wrapper"
-          className="w-[120px] flex items-center justify-end"
+          className="min-w-[120px] flex items-center justify-end"
         >
-          {visibleParticipants.map((participant, index) => {
-            return (
-              <img
-                key={index}
-                id="participant-icon"
-                src={participant.picture || avatar}
-                alt=""
-                className="rounded-full border w-10 h-10"
-              />
-            );
-          })}
+          {visibleParticipants.map((participant) => (
+            <NewMemberAvatar
+              user={participant}
+              key={participant.id}
+              className="w-12 h-12"
+            />
+          ))}
         </div>
         <Button asChild variant="secondary">
-          <Link to={`/${organization.id}/members/workspace`}>
-            Manage members
-          </Link>
+          <Link to="members/workspace">Manage members</Link>
         </Button>
       </div>
     </div>

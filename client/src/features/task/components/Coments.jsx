@@ -47,8 +47,6 @@ function Coments({ task }) {
 
       <div className="flex flex-col gap-4 w-full max-h-[120px] overflow-auto pr-4">
         {task.Comments.map((comment, index) => {
-          console.log({ comment });
-
           return (
             <div
               id="comment-row-wrapper"
@@ -59,19 +57,8 @@ function Coments({ task }) {
                 id="comment-content-col-wrapper"
                 className="flex flex-col gap-2"
               >
-                <div className="flex gap-4 items-center ">
-                  {comment.user?.picture ? (
-                    <img
-                      src={comment.user?.picture}
-                      alt="user-avatar"
-                      className="w-8 h-8 rounded-full"
-                    />
-                  ) : (
-                    <NewMemberAvatar
-                      email={comment.user?.email}
-                      className="w-8 h-8 rounded-full"
-                    />
-                  )}
+                <div className="flex gap-4 items-center">
+                  <NewMemberAvatar user={comment.user} />
                   <p>{comment.content}</p>
                 </div>
                 <p className="text-sm text-slate-400">
