@@ -5,14 +5,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Organizations() {
-  const [data, setData] = useState();
+  const [organizations, setOrganizations] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     axios
       .get("/api/organizations")
       .then((res) => {
-        setData(res.data);
+        setOrganizations(res.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -21,12 +21,13 @@ function Organizations() {
   }, []);
 
   if (loading) return <p>Loading...</p>;
+  if (!organizations) return <p>No organizations</p>;
 
   return (
     <div id="organizations-wrapper">
       <h2 className="font-semibold text-xl my-2">Organizations</h2>
       <ul className="flex flex-col gap-4">
-        {data.map((organization, index) => (
+        {organizations.map((organization, index) => (
           <li
             key={`${organization.name}-${index}`}
             className="flex items-center gap-4 justify-between"
