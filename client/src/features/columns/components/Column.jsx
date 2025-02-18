@@ -4,22 +4,20 @@ import Add from "@/assets/add.svg?react";
 import { Button } from "@/components/ui/button";
 import NewTaskDialog from "@/features/task/components/NewTaskDialog";
 
-function Column({ column }) {
+function Column({ column, draggedTask }) {
   const { isOver, setNodeRef } = useDroppable({
     id: column.id,
   });
 
-  const style = {
-    backgroundColor: isOver ? "green" : undefined,
-  };
+  let showDragOverlay =
+    isOver && draggedTask && draggedTask.parent_column !== column.id;
 
   return (
     <div
       id="column-wrapper"
       key={column.id}
       ref={setNodeRef}
-      className="bg-slate-200 min-w-60 border shadow rounded-md flex flex-col items-center gap-2 p-2 h-full"
-      style={style}
+      className="bg-slate-200 min-w-72 border shadow rounded-md flex flex-col items-center gap-2 p-2 h-full"
     >
       <div className="w-full flex items-center gap-2 justify-around m-2">
         <h2 className="text-xl font-semibold">{column.name}</h2>
@@ -32,10 +30,26 @@ function Column({ column }) {
 
       <div
         id="tasks-wrapper"
-        className="flex flex-col gap-4 overflow-auto pe-2"
+        className="flex flex-col gap-4 overflow-y-auto pe-2"
       >
-        {column.tasks.map((task, index) => {
-          return <Task key={`${task.name}-${index}`} task={task} />;
+        {showDragOverlay && (
+          <Task
+            task={draggedTask}
+            draggedStyle={{ opacity: 0.5, transform: "scale(0.9)" }}
+            demo={true}
+          />
+        )}
+
+        {column.tasks.map((task) => {
+          return (
+            <div
+              key={task.id}
+              style={task.id === draggedTask?.id ? { opacity: 0 } : {}}
+              className="overflow-hidden min-h-fit"
+            >
+              <Task task={task} />
+            </div>
+          );
         })}
       </div>
 
