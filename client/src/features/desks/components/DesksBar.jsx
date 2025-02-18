@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import Desk from "@/assets/desk.svg?react";
 
 function DesksBar() {
-  const { desks } = useSelector((state) => state.desks);
+  const { desks, loading } = useSelector((state) => state.desks);
+
+  if (loading) return <p>Loading...</p>;
+  if (!desks) return <p>No desks</p>;
 
   return (
     <div id="desks">
