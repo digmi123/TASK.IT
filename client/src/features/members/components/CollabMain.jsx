@@ -1,24 +1,12 @@
 import { Button } from "@/components/ui/button";
 import AddIcon from "@/assets/add.svg?react";
-import { useDeskMembers } from "../hooks/useDeskMembers";
 import ZeroDeskMembers from "./ZeroDeskMembers";
-import { Hourglass } from "react-loader-spinner";
 import WorkspaceMembers from "./WorkspaceMembers";
 import Divider from "@/shared/components/Divider";
+import { useOutletContext } from "react-router-dom";
 
 export default function CollabMain() {
-  const { members, loading } = useDeskMembers();
-
-  if (loading)
-    return (
-      <Hourglass
-        visible={true}
-        height="80"
-        width="80"
-        ariaLabel="hourglass-loading"
-        colors={["#306cce", "#72a1ed"]}
-      />
-    );
+  const { members } = useOutletContext();
   if (members.length === 0) return <ZeroDeskMembers />;
 
   return (
