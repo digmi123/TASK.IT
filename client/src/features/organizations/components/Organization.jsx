@@ -11,7 +11,6 @@ function Organization() {
   const { organizationId } = useParams();
   const dispatch = useDispatch();
   const { organization, loading } = useSelector((state) => state.organization);
-  console.log({ organization });
 
   useEffect(() => {
     dispatch(fetchUserOrganizationThunk({ organizationId }));
