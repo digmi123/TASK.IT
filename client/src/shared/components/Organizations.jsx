@@ -37,11 +37,12 @@ function Organizations() {
               id="left-side"
               className="flex items-center gap-2"
             >
-              <img
-                src={reactLogo}
-                alt=""
+              <div
+                id="rounded-logo-wrapper"
                 className="w-8 h-8 bg-primary rounded-md p-1 flex items-center justify-center"
-              />
+              >
+                <img src={reactLogo} alt="" className="w-full" />
+              </div>
               <p className="text-ellipsis w-[100px] overflow-hidden">
                 {organization.name}
               </p>
