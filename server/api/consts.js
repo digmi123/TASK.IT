@@ -24,6 +24,19 @@ const templateBoards = {
       },
     ],
   },
+
+  Marketing: {
+    boards: [
+      {
+        name: "Marketing",
+        columns: [
+          { name: "Marketing Phase A" },
+          { name: "Marketing Phase B" },
+          { name: "Marketing Phase C" },
+        ],
+      },
+    ],
+  },
 };
 
 module.exports = { templateBoards };
