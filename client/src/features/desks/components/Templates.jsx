@@ -1,7 +1,6 @@
 import TemplateIcon from "@/assets/template.svg?react";
-import TemplatePick from "@/shared/components/TemplatePick";
-
-const templateTypes = ["Product", "Testing", "Design", "Marketing"];
+import { templateCards } from "@/features/templates/consts";
+import TemplatePick from "@/features/templates/components/TemplatePick";
 
 export default function Templates() {
   return (
@@ -15,9 +14,19 @@ export default function Templates() {
       </p>
 
       <div id="templates-wrapper" className="flex gap-4 py-4">
-        {templateTypes.map((type) => (
-          <TemplatePick key={type} />
+        {templateCards.map(({ templateName, backgroundImage }) => (
+          <TemplatePick
+            templateName={templateName}
+            key={templateName}
+            backgroundImage={backgroundImage}
+            className="text-white"
+          />
         ))}
+        <TemplatePick
+          templateName="None"
+          backgroundImage=""
+          className="border-2 border-slate-300 text-primary"
+        />
       </div>
     </div>
   );
