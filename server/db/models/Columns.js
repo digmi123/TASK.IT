@@ -17,6 +17,6 @@ const Columns = sequelize.define("columns", {
 
 // Define Board Columns associations.
 Columns.belongsTo(Boards, { foreignKey: "board_id" });
-Boards.hasMany(Columns, { foreignKey: "board_id" });
+Boards.hasMany(Columns, { foreignKey: "board_id", onDelete: "CASCADE" });
 
 module.exports = Columns;

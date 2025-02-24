@@ -42,6 +42,6 @@ Users.hasMany(Tasks, { foreignKey: "owner_id" }); // Each user can own many task
 
 // Column Task associations.
 Tasks.belongsTo(Columns, { foreignKey: "parent_column" });
-Columns.hasMany(Tasks, { foreignKey: "parent_column" });
+Columns.hasMany(Tasks, { foreignKey: "parent_column", onDelete: "CASCADE" });
 
 module.exports = Tasks;

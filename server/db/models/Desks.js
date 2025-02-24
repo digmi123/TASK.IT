@@ -40,7 +40,7 @@ Users.belongsToMany(Desks, {
 });
 
 // Desks Board associations.
+Desks.hasMany(Boards, { foreignKey: "parent_desk", onDelete: "CASCADE" });
 Boards.belongsTo(Desks, { foreignKey: "parent_desk" });
-Desks.hasMany(Boards, { foreignKey: "parent_desk" });
 
 module.exports = Desks;
