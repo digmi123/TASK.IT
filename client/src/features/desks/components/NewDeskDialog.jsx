@@ -23,7 +23,7 @@ function NewDeskDialog({ children }) {
   const handleNewDesk = async (e) => {
     e.preventDefault();
     const deskName = e.target.desk_name.value;
-    const template = JSON.parse(e.target.template.value);
+    const template = e.target.template.value;
     dispatch(addNewDeskThunk({ deskName, template }));
     setOpen(false);
   };

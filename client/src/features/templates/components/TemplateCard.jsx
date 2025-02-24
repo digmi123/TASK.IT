@@ -19,7 +19,7 @@ export default function TemplateCard({
         hidden
         type="radio"
         name="template"
-        value={JSON.stringify({ templateName, backgroundImage })}
+        value={templateName}
         defaultChecked={checked}
         className="peer"
       />

@@ -48,8 +48,8 @@ router.post("/add-desk", async (req, res) => {
     owner_id: loggedUser.id,
   });
 
-  if (template.templateName === "None") return res.status(200).json(newDesk);
-  const chosenTemplate = templateBoards[template.templateName];
+  if (template === "None") return res.status(200).json(newDesk);
+  const chosenTemplate = templateBoards[template];
 
   //Create the Board.
   for (const board of chosenTemplate.boards) {
@@ -57,7 +57,7 @@ router.post("/add-desk", async (req, res) => {
       name: board.name,
       owner_id: loggedUser.id,
       parent_desk: newDesk.id,
-      background_image: template.backgroundImage,
+      background_image: chosenTemplate.backgroundImage,
     });
     for (const column of board.columns) {
       await db.Column.create({
