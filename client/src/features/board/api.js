@@ -10,10 +10,11 @@ export const getBoard = async (boardId) => {
   return boardData;
 };
 
-export const addNewBoard = async (deskId, boardName) => {
+export const addNewBoard = async (deskId, boardName, background) => {
   const newBoard = await axios.post("/api/desks/add-board", {
     deskId,
     name: boardName,
+    background_image: background,
   });
   return newBoard;
 };
