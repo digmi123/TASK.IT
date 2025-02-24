@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getDesks, addNewDesk as addNewDeskApi } from "@/features/desks/api"; // Replace with your API calls
+import {
+  getDesks,
+  addNewDesk as addNewDeskApi,
+  deleteDesk as deleteDeskApi,
+} from "@/features/desks/api"; // Replace with your API calls
 
 // Async thunk for fetching desks
 export const fetchDesksThunk = createAsyncThunk(
@@ -18,6 +22,14 @@ export const addNewDeskThunk = createAsyncThunk(
   }
 );
 
+export const deleteDeskThunk = createAsyncThunk(
+  "desks/deleteDesk",
+  async ({ deskId }, { dispatch }) => {
+    await deleteDeskApi({ deskId });
+    dispatch(deleteDesk({ deskId }));
+  }
+);
+
 // Slice definition
 const desksSlice = createSlice({
   name: "desks",
@@ -28,6 +40,11 @@ const desksSlice = createSlice({
   reducers: {
     addDesk: (state, action) => {
       state.desks = [...state.desks, action.payload];
+    },
+    deleteDesk: (state, action) => {
+      state.desks = state.desks.filter(
+        (desk) => desk.id !== action.payload.deskId
+      );
     },
   },
 
@@ -57,5 +74,5 @@ const desksSlice = createSlice({
   },
 });
 
-export const { addDesk } = desksSlice.actions;
+export const { addDesk, deleteDesk } = desksSlice.actions;
 export default desksSlice.reducer;

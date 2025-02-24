@@ -12,3 +12,7 @@ export const addNewDesk = async ({ deskName, template }) => {
   });
   return newDesk.data;
 };
+
+export const deleteDesk = async ({ deskId }) => {
+  await axios.delete(`/api/desks/${deskId}`);
+};
