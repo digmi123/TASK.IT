@@ -19,6 +19,11 @@ function BoardsCards({ boards, desk, loading }) {
           key={board.id}
           id="board"
           className="w-56 h-24 bg-card rounded-md"
+          style={{
+            backgroundImage: `url(${board.background_image})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
         >
           <div id="inner-template-card" className="py-2 px-4">
             <h2 className="text-white">{board.name}</h2>
