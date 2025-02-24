@@ -48,8 +48,8 @@ router.post("/add-desk", async (req, res) => {
     owner_id: loggedUser.id,
   });
 
-  if (template === "None") return res.status(200).json(newDesk);
-  const chosenTemplate = templateBoards[template];
+  if (template.templateName === "None") return res.status(200).json(newDesk);
+  const chosenTemplate = templateBoards[template.templateName];
 
   //Create the Board.
   for (const board of chosenTemplate.boards) {
@@ -57,6 +57,7 @@ router.post("/add-desk", async (req, res) => {
       name: board.name,
       owner_id: loggedUser.id,
       parent_desk: newDesk.id,
+      background_image: template.backgroundImage,
     });
     for (const column of board.columns) {
       await db.Column.create({
@@ -66,6 +67,12 @@ router.post("/add-desk", async (req, res) => {
     }
   }
   res.status(200).json(newDesk);
+});
+
+router.delete("/:deskId", async (req, res) => {
+  const deskId = Number(req.params.deskId);
+  await db.Desk.destroy({ where: { id: deskId } });
+  res.status(200).json({ message: "Desk deleted successfully" });
 });
 
 router.get("/:deskId", async (req, res) => {
@@ -94,12 +101,13 @@ router.get("/:deskId/members", async (req, res) => {
 
 router.post("/add-board", async (req, res) => {
   const loggedUser = req.user;
-  const { deskId, name } = req.body;
+  const { deskId, name, background_image } = req.body;
 
   const newBoard = await db.Board.create({
     name,
     owner_id: loggedUser.id,
     parent_desk: deskId,
+    background_image,
   });
   res.status(200).json(newBoard);
 });
