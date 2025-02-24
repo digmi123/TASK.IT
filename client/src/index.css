@@ -39,7 +39,7 @@
       --sidebar-border: hsl(220 13% 91%);
       --sidebar-ring: hsl(217.2 91.2% 59.8%);
     }
-  
+
     .dark {
       --background: hsl(20 14.3% 4.1%);
       --foreground: hsl(0 0% 95%);
@@ -179,4 +179,17 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/*
+  ---break---
+*/
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+      }
+  body {
+    @apply bg-background text-foreground;
+      }
 }
