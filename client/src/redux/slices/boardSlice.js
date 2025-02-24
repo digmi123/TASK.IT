@@ -23,10 +23,11 @@ export const addColumnThunk = createAsyncThunk(
 
 export const addNewTaskThunk = createAsyncThunk(
   "tasks/addTask",
-  async ({ task, columnId }, { dispatch }) => {
-    console.log({ task, columnId });
+  async ({ task, columnId }, { dispatch, getState }) => {
+    const state = getState();
+    const { user } = state.user;
 
-    dispatch(addNewTask({ columnId, task }));
+    dispatch(addNewTask({ columnId, task, user }));
     addNewTaskApi({ columnId, task }).catch((error) => {
       // Handle error: Rollback the optimistic update
       console.error("Failed to update the backend:", error);
@@ -66,15 +67,12 @@ const boardSlice = createSlice({
   },
   reducers: {
     addNewTask: (state, action) => {
-      const { columnId, task } = action.payload;
-      console.log({ columnId, task });
-
+      const { columnId, task, user } = action.payload;
       const column = state.boardData.columns.find(
         (column) => column.id === columnId
       );
       task.Comments = [];
-      console.log({ addedTask: task });
-
+      task.user = user;
       column.tasks.push(task);
     },
 
