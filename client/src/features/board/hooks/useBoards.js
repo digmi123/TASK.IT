@@ -5,8 +5,8 @@ export function useBoards(deskId) {
   const [loading, setLoading] = useState(true);
   const [boards, setBoards] = useState([]);
 
-  const addBoard = (boardName) => {
-    addNewBoard(deskId, boardName).then((res) => {
+  const addBoard = ({ boardName, background }) => {
+    addNewBoard(deskId, boardName, background).then((res) => {
       setBoards((prev) => [...prev, res.data]);
     });
   };
