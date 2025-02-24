@@ -17,13 +17,13 @@ import { useDispatch } from "react-redux";
 import UsersSearch from "@/shared/components/UsersSearch";
 import { templateCards } from "@/features/templates/consts";
 
-function NewDeskDialog() {
+function NewDeskDialog({ children }) {
   const dispatch = useDispatch();
 
   const handleNewDesk = async (e) => {
     e.preventDefault();
     const deskName = e.target.desk_name.value;
-    const template = e.target.template.value;
+    const template = JSON.parse(e.target.template.value);
     dispatch(addNewDeskThunk({ deskName, template }));
     setOpen(false);
   };
@@ -33,10 +33,11 @@ function NewDeskDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild className="cursor-pointer">
-        <Button variant="secondary">Create Desk</Button>
+        {children}
       </DialogTrigger>
+
       <DialogContent id="new-desk-dialog" className="w-fit">
-        <div id="dialog-content" className="max-w-[900px]">
+        <div id="dialog-content" className="max-w-[800px]">
           <DialogHeader>
             <DialogTitle>New Desk</DialogTitle>
             <DialogDescription>Add your own desk.</DialogDescription>
