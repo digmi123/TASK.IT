@@ -44,15 +44,15 @@ function Login() {
             <a href="./register">Register</a>
           </Button>
         </div>
-      </form>
 
-      <Button
-        variant="outlined"
-        className="border-2 rounded shadow-sm"
-        onClick={auth}
-      >
-        <Mail /> Sign in with Gmail
-      </Button>
+        <Button
+          variant="ghost"
+          className="border-2 rounded shadow-sm"
+          onClick={auth}
+        >
+          <Mail /> Sign in with Gmail
+        </Button>
+      </form>
     </div>
   );
 }
