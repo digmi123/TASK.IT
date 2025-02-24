@@ -2,6 +2,10 @@
 
 @plugin 'tailwindcss-animate';
 
+  .invalid {
+    @apply empty:hidden text-red-500 text-sm mt-1 before:content-['*'];
+  }
+
 @custom-variant dark (&:is(.dark *));
 
     :root {
