@@ -19,6 +19,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchUserInfoThunk } from "@/redux/slices/userSlice";
 import { handleLogout } from "../auth/api";
+import NewMemberAvatar from "@/features/members/components/NewMemberAvatar";
+import { Button } from "@/components/ui/button";
 
 function Navbar() {
   const dispatch = useDispatch();
@@ -91,21 +93,16 @@ function Navbar() {
             </MenubarContent>
           </MenubarMenu>
 
-          <NewDeskDialog />
+          <NewDeskDialog>
+            <Button variant="secondary">Create Desk</Button>
+          </NewDeskDialog>
         </div>
 
         <MenubarMenu>
           <MenubarTrigger>
-            {user.picture ? (
-              <img
-                src={user.picture}
-                alt="avatar"
-                className="w-8 h-8 rounded-full"
-              />
-            ) : (
-              <Avatar />
-            )}
+            <NewMemberAvatar user={user} />
           </MenubarTrigger>
+
           <MenubarContent>
             <MenubarItem
               className="gap-2"
@@ -122,7 +119,6 @@ function Navbar() {
         </MenubarMenu>
       </Menubar>
     </ul>
-    // </div>
   );
 }
 
