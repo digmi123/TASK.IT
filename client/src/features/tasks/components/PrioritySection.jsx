@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-export default function PrioritySection() {
+export default function PrioritySection({ register, errors }) {
   const priorities = [
     { label: "Low", priorityStyle: "bg-teal-500" },
     { label: "Medium", priorityStyle: "bg-yellow-500" },
@@ -9,7 +9,6 @@ export default function PrioritySection() {
 
   return (
     <div id="priority-section" className="flex flex-col gap-2">
-      <h2>Priority</h2>
       <div className="flex gap-4 items-center">
         {priorities.map(({ label, priorityStyle }) => (
           <label key={label}>
@@ -18,6 +17,7 @@ export default function PrioritySection() {
               name="priority"
               value={label}
               className="peer hidden"
+              {...register("priority")}
             />
             <div
               key={label}
@@ -31,6 +31,7 @@ export default function PrioritySection() {
           </label>
         ))}
       </div>
+      <p className="invalid">{errors.priority?.message}</p>
     </div>
   );
 }
