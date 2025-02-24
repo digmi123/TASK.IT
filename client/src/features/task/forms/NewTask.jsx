@@ -19,6 +19,7 @@ function NewTask({ columnId, setOpen }) {
       title: task_name.value,
       description: task_description.value,
       priority: priority.value,
+      createdAt: new Date().toISOString(),
     };
     dispatch(addNewTaskThunk({ task: newTask, columnId }));
     setOpen(false);
