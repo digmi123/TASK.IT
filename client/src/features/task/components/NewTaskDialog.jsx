@@ -17,14 +17,18 @@ export default function NewTaskDialog({ columnId, children }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogTrigger asChild className="cursor-pointer">
+        {children}
+      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>New Task</DialogTitle>
           <DialogDescription>Add your own task.</DialogDescription>
         </DialogHeader>
 
+        {/* <DialogContent> */}
         <NewTask columnId={columnId} setOpen={setOpen} />
+        {/* </DialogContent> */}
 
         <DialogFooter className="sm:justify-start">
           <DialogClose asChild>
