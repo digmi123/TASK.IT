@@ -38,8 +38,6 @@ router.get("/", async (req, res) => {
 router.post("/add-desk", async (req, res) => {
   const loggedUser = req.user;
   const { name, template } = req.body;
-  console.log({ name, template });
-
   // Need to get the template and decide what boards to add by template pick.
 
   const newDesk = await db.Desk.create({
