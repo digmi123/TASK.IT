@@ -1,11 +1,17 @@
 import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 
-const NewMemberAvatar = forwardRef(({ user, className }, ref) => {
+const NewMemberAvatar = forwardRef(({ user, className, style = {} }, ref) => {
+  console.log({ style });
+
   const firstLetter = user.email.toUpperCase()[0];
 
   return (
-    <div className={cn("w-8 h-8 min-w-8 min-h-8", className)} ref={ref}>
+    <div
+      className={cn("w-8 h-8 min-w-8 min-h-8", className)}
+      ref={ref}
+      style={style}
+    >
       {user.picture ? (
         <img
           src={user.picture}
