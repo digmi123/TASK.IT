@@ -25,24 +25,19 @@ function NewTask({ columnId, setOpen }) {
   } = useForm({ resolver: yupResolver(schema) });
   const dispatch = useDispatch();
 
-  const handleNewTask = (e) => {
-    e.preventDefault();
-    const { task_name, task_description, priority } = e.target;
-
+  const handleNewTask = (data) => {
     //Optimistic update
     const newTask = {
       id: Math.random(),
       parent_column: columnId,
-      title: task_name.value,
-      description: task_description.value,
-      priority: priority.value,
+      title: data.task_name,
+      description: data.task_description,
+      priority: data.priority,
       createdAt: new Date().toISOString(),
     };
     dispatch(addNewTaskThunk({ task: newTask, columnId }));
     setOpen(false);
   };
-
-  console.log(register("task_name"));
 
   return (
     <form
