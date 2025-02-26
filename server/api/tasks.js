@@ -9,6 +9,12 @@ router.get("/:taskId", async (req, res) => {
   res.status(200).json(task);
 });
 
+router.delete("/:taskId", async (req, res) => {
+  const taskId = Number(req.params.taskId);
+  await db.Task.destroy({ where: { id: taskId } });
+  res.status(200).json({ message: "Task deleted successfully" });
+});
+
 router.put("/:taskId", async (req, res) => {
   const { taskId } = req.params;
   const { new_parent } = req.body;

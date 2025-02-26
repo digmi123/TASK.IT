@@ -1,8 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getBoard } from "@/features/board/api";
 import { addColumn as addColumnApi } from "@/features/columns/api";
-import { updateTaskParent } from "@/features/tasks/api";
-import { addTask as addNewTaskApi } from "@/features/tasks/api";
+import {
+  updateTaskParent,
+  addTask as addNewTaskApi,
+  deleteTask as deleteTaskApi,
+} from "@/features/tasks/api";
 
 // Async thunk for fetching desks
 export const fetchBoardThunk = createAsyncThunk(
@@ -33,6 +36,23 @@ export const addNewTaskThunk = createAsyncThunk(
       console.error("Failed to update the backend:", error);
       // Rollback state to maintain consistency
       // dispatch(removeTask({ parentColumn: targetColumn, id: task.id }));
+    });
+  }
+);
+
+export const deleteTaskThunk = createAsyncThunk(
+  "tasks/deleteTask",
+  async (task, { dispatch }) => {
+    console.log("im hereeeeeeeeeeeeeee dispatch");
+
+    // Optimistically update state
+    dispatch(removeTask({ parentColumn: task.parent_column, id: task.id }));
+    // Backend update
+    deleteTaskApi(task).catch((error) => {
+      // Handle error: Rollback the optimistic update
+      console.error("Failed to update the backend:", error);
+      // Rollback state to maintain consistency
+      // dispatch(addTask({ columnId: task.parentColumn, task }));
     });
   }
 );
@@ -81,6 +101,7 @@ const boardSlice = createSlice({
       const column = state.boardData.columns.find(
         (column) => column.id === columnId
       );
+
       const updatedTask = {
         ...task.data.current,
         parent_column: columnId,

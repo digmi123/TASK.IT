@@ -5,10 +5,18 @@ import taskBg from "@/assets/task-bg.jpg";
 import Tag from "./Tag";
 import TaskDialog from "@/features/task/components/TaskDialog";
 import NewMemberAvatar from "@/features/members/components/NewMemberAvatar";
-import { useCallback, useEffect, useRef } from "react";
 import { formatDate } from "@/shared/utils";
+import Delete from "@/assets/close-x.svg?react";
+import { deleteTaskThunk } from "@/redux/slices/boardSlice";
+import { useDispatch } from "react-redux";
+import ConfirmDialog from "@/shared/components/ConfirmDialog";
+import trash from "@/assets/trash.svg";
+import { useState } from "react";
 
 function Task({ task, draggedStyle, demo }) {
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+
+  const dispatch = useDispatch();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: demo ? -1 : task.id,
     data: task,
@@ -22,15 +30,34 @@ function Task({ task, draggedStyle, demo }) {
 
   style = { ...style, ...draggedStyle };
 
+  const handleDelete = (event) => {
+    event.stopPropagation();
+    setDeleteDialogOpen(true);
+  };
+
   return (
     <TaskDialog task={task}>
       <div
-        className="bg-white p-4 rounded-md w-60 max-w-60 shadow-sm flex flex-col items-start gap-4"
+        className="bg-white p-4 rounded-md w-60 max-w-60 shadow-sm flex flex-col items-start gap-4 relative"
         ref={setNodeRef}
         style={style}
         {...listeners}
         {...attributes}
       >
+        <Delete
+          className="absolute top-0 right-0 bottom-0 w-fit"
+          onClick={(event) => handleDelete(event, task)}
+        />
+
+        <ConfirmDialog
+          innerText="Are you sure you want to delete this task?"
+          open={deleteDialogOpen}
+          setOpen={setDeleteDialogOpen}
+          title="Delete Task"
+          onConfirm={() => dispatch(deleteTaskThunk(task))}
+          icon={trash}
+        />
+
         <img src={taskBg} alt="bg" className="rounded-md" />
         <div className="flex gap-2">
           <CheckMark style={{ width: "24px", height: "24px" }} />
