@@ -5,7 +5,7 @@ import Divider from "@/shared/components/Divider";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUserOrganizationThunk } from "@/redux/slices/organizationSlice";
-import OrganizationMembers from "./OrganizationMembers";
+import MembersCircleList from "./MembersCircleList";
 
 function Organization() {
   const { organizationId } = useParams();
@@ -26,7 +26,7 @@ function Organization() {
       </div>
       <Divider />
       {organization.members.length > 0 && (
-        <OrganizationMembers organization={organization} />
+        <MembersCircleList organization={organization} />
       )}
 
       <Desks />
