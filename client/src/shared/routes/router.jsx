@@ -10,7 +10,7 @@ import Home from "../../features/screens/Home";
 import AppLayout from "../layouts/AppLayout";
 import Organization from "@/features/organizations/components/Organization";
 import DeskMembers from "@/features/desks/components/DeskMembers";
-import OrganizationParticipant from "@/features/organizations/components/OrganizationParticipant";
+import OrganizationParticipant from "@/features/organizations/components/OrganizationMembers";
 
 const router = createBrowserRouter([
   {
