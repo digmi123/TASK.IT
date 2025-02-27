@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import NewMemberAvatar from "./NewMemberAvatar";
+import { Link } from "react-router-dom";
 
 export default function Member({ member }) {
   return (
@@ -11,9 +12,11 @@ export default function Member({ member }) {
         </div>
       </div>
       <div id="action-buttons" className="flex gap-4">
-        <Button>VIew Boards</Button>
-        <Button>VIew Boards</Button>
-        <Button>VIew Boards</Button>
+        <Button>
+          <Link to={`/profile/${member.id}`}>View Profile</Link>
+        </Button>
+        <Button>View Boards</Button>
+        <Button>View Boards</Button>
       </div>
     </div>
   );

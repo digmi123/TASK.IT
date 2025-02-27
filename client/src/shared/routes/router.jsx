@@ -11,6 +11,7 @@ import AppLayout from "../layouts/AppLayout";
 import Organization from "@/features/organizations/components/Organization";
 import DeskMembers from "@/features/desks/components/DeskMembers";
 import OrganizationParticipant from "@/features/organizations/components/OrganizationMembers";
+import UserProfile from "@/features/screens/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "desks",
         element: <Desks />,
+      },
+      {
+        path: "profile/:userId",
+        element: <UserProfile />,
       },
       {
         path: "/organization/:organizationId",

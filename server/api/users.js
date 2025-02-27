@@ -7,6 +7,15 @@ router.get("/get_users", async (req, res) => {
   res.status(200).json(users);
 });
 
+router.get("/get_user_info/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = await db.User.findOne({
+    where: { id },
+    include: { model: db.Desk },
+  });
+  return res.status(200).json(user);
+});
+
 router.get("/get_user_info", async (req, res) => {
   const { id } = req.user;
   const user = await db.User.findOne({ where: { id } });
