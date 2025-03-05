@@ -2,9 +2,9 @@ import { cn } from "@/lib/utils";
 import { forwardRef } from "react";
 
 const NewMemberAvatar = forwardRef(({ user, className, style = {} }, ref) => {
-  console.log({ style });
+  const firstLetter = user?.email?.toUpperCase()[0];
 
-  const firstLetter = user.email.toUpperCase()[0];
+  if (!user) return null;
 
   return (
     <div
