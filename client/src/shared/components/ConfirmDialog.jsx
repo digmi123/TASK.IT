@@ -22,6 +22,11 @@ function ConfirmDialog({
     setOpen(false);
   };
 
+  const handleClose = (event) => {
+    event.stopPropagation();
+    setOpen(false);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -35,7 +40,7 @@ function ConfirmDialog({
         </div>
 
         <DialogFooter className="sm:justify-start">
-          <DialogClose asChild>
+          <DialogClose asChild onClick={handleClose}>
             <Button variant="primary">Close</Button>
           </DialogClose>
           <Button onClick={handleConfirm}>Sure</Button>
