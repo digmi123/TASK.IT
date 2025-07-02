@@ -6,9 +6,9 @@ const { Op } = require("sequelize");
 router.get("/", async (req, res) => {
   const loggedUser = req.user;
   const organizations = await db.Organizations.findAll({
-    where: {
-      [Op.or]: [{ "$members.id$": loggedUser.id }, { owner_id: loggedUser.id }],
-    },
+    // where: {
+    //   [Op.or]: [{ "$members.id$": loggedUser.id }, { owner_id: loggedUser.id }],
+    // },
     include: [
       {
         model: db.User,
@@ -21,10 +21,20 @@ router.get("/", async (req, res) => {
     ],
   });
 
-  organizations.forEach((organization) =>
-    organization.members.push(organization.owner)
-  );
+  // organizations.forEach((organization) =>
+  //   organization.members.push(organization.owner)
+  // );
   return res.json(organizations);
+});
+
+router.get("/:organizationId/members", async (req, res) => {
+  const organizationId = Number(req.params.organizationId);
+  const organization = await db.Organizations.findOne({
+    where: { id: organizationId },
+    include: { model: db.User, as: "members" },
+  });
+
+  res.status(200).json(organization.members);
 });
 
 router.get("/:organizationId", async (req, res) => {

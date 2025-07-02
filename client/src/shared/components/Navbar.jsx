@@ -114,9 +114,9 @@ function Navbar() {
             <MenubarSeparator />
             <MenubarItem>Print</MenubarItem>
             <MenubarSeparator />
-            <MenubarItem>
-              <Link to={`/profile/${user.id}`}>Profile</Link>
-            </MenubarItem>
+            <Link to={`/profile/${user.id}`}>
+              <MenubarItem>Profile</MenubarItem>
+            </Link>
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
