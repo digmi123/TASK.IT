@@ -12,30 +12,84 @@ import { useDispatch } from "react-redux";
 import ConfirmDialog from "@/shared/components/ConfirmDialog";
 import trash from "@/assets/trash.svg";
 import { useState } from "react";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
-function Task({ task, draggedStyle, demo }) {
+function Task({ task, draggedStyle, draggedTask, demo }) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({
-    id: demo ? -1 : task.id,
-    data: task,
+
+  const {
+    setNodeRef,
+    attributes,
+    listeners,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({
+    id: task.id,
+    data: {
+      type: "Task",
+      task,
+    },
   });
 
-  let style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
-
-  style = { ...style, ...draggedStyle };
+  const style = {
+    transition,
+    transform: CSS.Transform.toString(transform),
+  };
 
   const handleDelete = (event) => {
     event.stopPropagation();
     setDeleteDialogOpen(true);
   };
 
+  if (isDragging && draggedTask)
+    return (
+      <div
+        id="box-test"
+        className="bg-white p-4 border-2 border-rose-500 opacity-40 rounded-md w-60 max-w-60 shadow-sm flex flex-col items-start gap-4 relative"
+        ref={setNodeRef}
+        style={style}
+        {...listeners}
+        {...attributes}
+      >
+        <Delete
+          className="absolute top-0 right-0 bottom-0 w-fit"
+          onClick={(event) => handleDelete(event, task)}
+        />
+        <img src={taskBg} alt="bg" className="rounded-md" />
+        <div className="flex gap-2">
+          <CheckMark style={{ width: "24px", height: "24px" }} />
+          <h1 className="">{task.title}</h1>
+        </div>
+        <Tag priority={task.priority} />
+
+        <div className="flex items-center justify-between gap-2 w-full">
+          <div className="flex items-center gap-2">
+            <NewMemberAvatar user={task.user} />
+            <p className="text-sm text-slate-400">
+              {formatDate(task.createdAt, "short")}
+            </p>
+          </div>
+          <CommentsIcon />
+        </div>
+      </div>
+    );
+
   return (
+    // <div
+    //   id="box-test"
+    //   className="bg-white border-black border-2 p-4 rounded-md w-60 max-w-60 shadow-sm flex flex-col items-start gap-4 relative"
+    //   ref={setNodeRef}
+    //   style={style}
+    //   {...listeners}
+    //   {...attributes}
+    // >
+    //   {task.id}-{task.title}
+    // </div>
+
     <TaskDialog task={task}>
       <div
         className="bg-white p-4 rounded-md w-60 max-w-60 shadow-sm flex flex-col items-start gap-4 relative"
@@ -71,11 +125,9 @@ function Task({ task, draggedStyle, demo }) {
             <p className="text-sm text-slate-400">
               {formatDate(task.createdAt, "short")}
             </p>
-            {/* <p className="text-sm text-slate-400">11 April</p> */}
           </div>
           <CommentsIcon />
         </div>
-        {/* Add Likes and comments icons on the bottom-right side of the card */}
       </div>
     </TaskDialog>
   );
