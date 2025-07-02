@@ -5,13 +5,16 @@ import trash from "@/assets/trash.svg";
 import x from "@/assets/x.svg";
 import { Button } from "@/components/ui/button";
 import NewTaskDialog from "@/features/task/components/NewTaskDialog";
+import { deleteColumnThunk } from "@/redux/slices/boardSlice";
 import ConfirmDialog from "@/shared/components/ConfirmDialog";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 function Column({ column, draggedTask }) {
   const [deleteColumnDialogOpen, setDeleteColumnDialogOpen] = useState(false);
+  const dispatch = useDispatch();
   const {
     setNodeRef,
     attributes,
@@ -79,18 +82,15 @@ function Column({ column, draggedTask }) {
           </div>
 
           <ConfirmDialog
-            innerText="Are you sure you want to delete this desk?"
+            innerText={`Are you sure you want to delete this "${column.name}" column?`}
             open={deleteColumnDialogOpen}
             setOpen={setDeleteColumnDialogOpen}
             title="Delete Column"
-            // onConfirm={() => dispatch(deleteDeskThunk({ deskId: desk.id }))}
+            onConfirm={() =>
+              dispatch(deleteColumnThunk({ columnId: column.id }))
+            }
             icon={trash}
           />
-          {/* <NewTaskDialog columnId={column.id}>
-            <button>
-              <Add />
-            </button>
-          </NewTaskDialog> */}
         </div>
 
         <div

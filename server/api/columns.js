@@ -9,4 +9,12 @@ router.post("/add-column", async (req, res) => {
   res.status(200).json(newColumn);
 });
 
+router.delete("/delete-column/:columnId", async (req, res) => {
+  const columnId = Number(req.params.columnId);
+  console.log("Deleting column with ID:", columnId);
+
+  await db.Column.destroy({ where: { id: columnId } });
+  res.status(200).json({ message: "Column deleted successfully" });
+});
+
 module.exports = router;

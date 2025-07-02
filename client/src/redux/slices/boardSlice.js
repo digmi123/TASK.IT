@@ -6,6 +6,7 @@ import {
   addTask as addNewTaskApi,
   deleteTask as deleteTaskApi,
 } from "@/features/tasks/api";
+import { deleteColumn as deleteColumnApi } from "@/features/columns/api";
 import { arrayMove } from "@dnd-kit/sortable";
 
 // Async thunk for fetching desks
@@ -48,6 +49,23 @@ export const deleteTaskThunk = createAsyncThunk(
     dispatch(removeTask({ parentColumn: task.parent_column, id: task.id }));
     // Backend update
     deleteTaskApi(task).catch((error) => {
+      // Handle error: Rollback the optimistic update
+      console.error("Failed to update the backend:", error);
+      // Rollback state to maintain consistency
+      // dispatch(addTask({ columnId: task.parentColumn, task }));
+    });
+  }
+);
+
+export const deleteColumnThunk = createAsyncThunk(
+  "tasks/deleteColumn",
+  async ({ columnId }, { dispatch }) => {
+    console.log("Deleting column with ID:", columnId);
+
+    // Optimistically update state
+    dispatch(removeColumn({ columnId }));
+    // Backend update
+    deleteColumnApi({ columnId }).catch((error) => {
       // Handle error: Rollback the optimistic update
       console.error("Failed to update the backend:", error);
       // Rollback state to maintain consistency
@@ -146,6 +164,12 @@ const boardSlice = createSlice({
         .tasks.find((task) => task.id === taskId);
       task.Comments.push({ ...comment, user });
     },
+    removeColumn: (state, action) => {
+      const { columnId } = action.payload;
+      state.boardData.columns = state.boardData.columns.filter(
+        (column) => column.id !== columnId
+      );
+    },
 
     updateColumnsIndexes: (state, action) => {
       const { activeColumnId, overColumnId } = action.payload;
@@ -229,6 +253,7 @@ export const {
   addTask,
   addNewTask,
   addTaskComment,
+  removeColumn,
   updateColumnsIndexes,
   findParentColumn,
   updateTasksIndexes,
